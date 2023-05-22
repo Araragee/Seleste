@@ -1029,6 +1029,9 @@ transform: rotate(-25deg);
   }
 }
 
+.banner-seventh__button{
+  text-align: center;
+}
 .banner-seventh__button button{  
   background-color: var(--c-red);
   color: white;
