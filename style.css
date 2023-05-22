@@ -1924,6 +1924,7 @@ input[type="text"], textarea {
 
 .inner-container {
   display: flex;
+  text-align: center;
 }
 
 .img-container__img {
@@ -2691,7 +2692,7 @@ input[type="radio"] {
 }
 
 .services__container-second-col {
-  padding: 2rem 2rem;
+  padding-left: 7rem;
   width: 40%;
 }
 
@@ -2708,7 +2709,7 @@ margin: 0;
 }
 
 .services__container-second-col h1{
-  font-size: 48px;
+  font-size: 62px;
   margin-top: 1rem;
   margin-bottom: 0;
 }
@@ -2751,5 +2752,17 @@ margin: 0;
   color: var(--c-red);
 }
 
-
+.cards__button button{
+  background-color: var(--c-red);
+  color: white;
+  border-radius: 5px;
+  padding: 14px 45px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  border-style: none;
+  position: relative;
+  margin-top: 5rem;
+  text-align: center;
+}
 
