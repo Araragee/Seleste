@@ -1,7 +1,10 @@
+
+/*can you make my css code responive form obile and tablet?*/
+
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700|Roboto+Slab:400,700');
 @font-face {
   font-family: 'Outfit';
-  src: url('path/to/Outfit-Regular.ttf') format('truetype');
+  src: url('/fonts/Outfit-VariableFont_wght.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -38,10 +41,15 @@
 h1{
   font-size: 64px;
   line-height: 1.2;
+  font-weight: 900;
+  font-style: normal;
+  font-family: 'Outfit';
 }
 h2{
   font-size: 40px;
   line-height: 1.2;
+  font-weight: 700;
+  font-style: normal;
 }
 body {
   margin: 0;
@@ -49,7 +57,8 @@ body {
   font-family: Arial, sans-serif;
 }
 p {
-  letter-spacing: 1px; 
+  letter-spacing: 1px;
+  font-family: 'Outfit'; 
 }
 
 .marquee {
@@ -130,6 +139,7 @@ p {
 .navbar .menu {
   flex: 1 0 auto;
   text-align: center;
+  padding-left: 10%;
 }
 
 .navbar .menu ul {
@@ -223,9 +233,6 @@ p {
 }
 
 .banner .container .first-col h2 {
-  font-family: 'Outfit';
-  font-weight: 400;
-  font-style: normal;
   font-size: 16px;
   display: inline-block;
 }
@@ -762,6 +769,7 @@ background: linear-gradient(to right, rgba(247, 141, 167, 0.9), rgba(255, 105, 0
   color: rgba(0, 0, 0, 0.4);
   width: 80%;
   font-weight: 400;
+  line-height: 1.6;
 }
 
 .banner-fifth .second-container h1{
@@ -990,15 +998,15 @@ transform: rotate(-25deg);
   background-color: #f8f8f8;
   border-style: none;
   border-radius: 4px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
+  padding: 2rem 2rem 1rem; 
+  max-width: 300px;
 }
 
 .slider__card-image {
-  max-width: 100px;
-  margin-right: 20px;
+  min-width: 5rem;
+  margin-bottom: 20px; /* add this to create space between the image and the content */
   border-radius: 4px;
+  margin: 1rem;
 }
 
 .slider__card-title {
@@ -1007,8 +1015,8 @@ transform: rotate(-25deg);
 }
 
 .slider__card-description {
-  font-size: 24px;
-  color: #777;
+  font-size: 20px;
+  color: var(--c-black);
 }
 
 /* Animation styles */
@@ -1672,6 +1680,7 @@ line-height: 1.5;
 .footer__column p {
   line-height: 1.5;
   color: var(--c-gray);
+  font-size: 16px;
 }
 .footer__column-list {
   margin: 0;
@@ -1725,6 +1734,7 @@ line-height: 1.5;
   border-radius: 3px;
 }
 
+
 .send-button {
   position: absolute;
   right: 5%;
@@ -1760,6 +1770,39 @@ line-height: 1.5;
 
 
 /*-----------Contact us Page--------------*/
+
+.contactus-first__section {
+  padding: 5rem;
+  font-family: 'Outfit';
+  background-color: var(--c-light-gray);
+}
+
+.contactus-first__section .container {
+  display: flex;
+  justify-content: center;
+}
+
+.contactus-first__section .container .title{
+  text-align: center;
+}
+
+.contactus-first__section .container1 .sub-title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contactus-first__section .container1 .sub-title .sub-title__home p{
+  color: var(--c-gray);
+
+}
+
+.contactus-first__section .container1 .sub-title .line{
+  width: 1.7rem;
+  height: 0.07rem;
+  background-color: var(--c-gray);
+  margin: 0.02rem .6rem;
+}
 
 .services__first-section {
   padding: 5rem;
@@ -2337,6 +2380,7 @@ letter-spacing: 2px;
   max-width: 100%;
   padding: 0;
   margin: 0;
+ 
 }
 
 .profile-social {
@@ -2499,6 +2543,40 @@ max-width: 100%;
 
 
 /*----------------Services Page-----------------------*/
+
+.about-first__section {
+  padding: 5rem;
+  font-family: 'Outfit';
+  background-color: var(--c-light-gray);
+}
+
+.about-first__section .container {
+  display: flex;
+  justify-content: center;
+}
+
+.about-first__section .container .title{
+  text-align: center;
+}
+
+.about-first__section .container1 .sub-title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-first__section .container1 .sub-title .sub-title__home p{
+  color: var(--c-gray);
+
+}
+
+.about-first__section .container1 .sub-title .line{
+  width: 1.7rem;
+  height: 0.07rem;
+  background-color: var(--c-gray);
+  margin: 0.02rem .6rem;
+}
+
 .third-container__services{
   text-align: center;
   padding: 2rem;
