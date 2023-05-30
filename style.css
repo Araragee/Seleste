@@ -3086,8 +3086,28 @@ margin: 0;
   text-align: center;
 }
 .banner-9th__column-70 {
-  text-align: center;
-  justify-content: center;
+  justify-content: left;
+}
+.banner-9th__column-second {
+  margin-left: 0;
+  flex-basis: 50%;
+}
+.banner-9th .cards {
+  justify-content: right;
+}
+
+.banner-9th__column-second{
+  margin-left: 0;
+}
+.banner-9th .cards1 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: left;
+  margin-top: 10vh;
+  margin-left: 0;
+  transition: all 0.3s;
 }
 
   .banner--11th .container2{
@@ -3153,9 +3173,15 @@ margin: 0;
     }
     .accordion li{
       width: 100%;
+      text-align: center;
+    }
+    .accordion p{
+      font-size: 20px;
+      line-height: 1.6;
     }
     .accordion li label {
-     font-size: 35px;
+     font-size: 30px;
+     text-align: left;
     }
   .banner--13th .button-list--social {
     display: flex;
@@ -3165,7 +3191,6 @@ margin: 0;
   .banner--13th .button-list--social p{
     font-size: 24px;
   }
-
 
   .footer__columns {
     display: block;
@@ -3181,4 +3206,9 @@ margin: 0;
   .email-form {
     margin-top: 2rem;
   }
+  .second__section-main-container {
+    display: flex;
+    width: 100%;
+  }
 }
+
