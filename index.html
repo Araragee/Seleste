@@ -7,6 +7,8 @@
 	<link rel="stylesheet" type="text/css" href="./particles.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 	<script src="script.js" defer></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="script3.js" defer></script>
 	
 </head>
 <body class="page__body">
@@ -32,7 +34,7 @@
 	<!-- Navbar -->
 	<nav class="navbar">
 		<div class="navbar__logo logo">
-			<a href="index.html"><img src="./assets/logo.png" alt="your logo description" class="logo__image"></a>
+		  <a href="index.html"><img src="./assets/logo.png" alt="your logo description" class="logo__image"></a>
 		</div>
 		<div class="navbar__menu menu">
 		  <ul class="menu__list">
@@ -54,6 +56,11 @@
 		  </div>
 		</div>
 		<button class="navbar__black-button black-button">Start A Project</button>
+		<button class="navbar__hamburger hamburger">
+		  <span class="hamburger__line"></span>
+		  <span class="hamburger__line"></span>
+		  <span class="hamburger__line"></span>
+		</button>
 	  </nav>
 	  <!-- Navbar -->
 
@@ -164,7 +171,9 @@
 
 
 		<section class="about-third" id="about-third">
-			<div id="particle-container">
+			
+			<div class="about-third__container">
+				<div id="particle-container">
 				<div class="particle"></div>
 				<div class="particle"></div>
 				<div class="particle"></div>
@@ -196,7 +205,6 @@
 				<div class="particle"></div>
 				<div class="particle"></div>
 			</div>
-			<div class="about-third__container">
 			  <div class="about-third__container-subheading subheading">
 				<p class="about-third__container-text">Our Materials</p>
 				<h1 class="about-third__container-title">Available 3D printing materials</h1>
@@ -218,19 +226,6 @@
 		  
 		  <section class="banner-fourth">
 			<div class="banner-fourth__container container">
-				<div id="particle-container">
-					<div class="particle"></div>
-					<div class="particle"></div>
-					<div class="particle"></div>
-					<div class="particle"></div>
-					<div class="particle"></div>
-					<div class="particle"></div>
-					<div class="particle"></div>
-					<div class="particle"></div>
-					<div class="particle"></div>
-					<div class="particle"></div>
-					<div class="particle"></div>
-				</div>
 				<div class="container__col first-col">
 					<div class="container__col background">
 						<img src="/assets/banner-12-9.png" alt="banner-image12" class="pc">
@@ -942,6 +937,11 @@
 				  </div>
 				</div>
 			  </div>
+
+			<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+			<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+			<script src="script.js"></script>
+
 		</section>
 
 		<section class="banner--12th">
@@ -977,19 +977,19 @@
 			<div class="container">
 			  <ul class="button-list button-list--social">
 				<li class="button-list__item">
-				  <button class="button button--facebook">Facebook</button>
+				  <button class="button button--facebook"><p>Facebook</p></button>
 				</li>
 				<li class="button-list__item">
-				  <button class="button button--twitter">Twitter</button>
+				  <button class="button button--twitter"><p>Twitter</p></button>
 				</li>
 				<li class="button-list__item">
-				  <button class="button button--instagram">Instagram</button>
+				  <button class="button button--instagram"><p>Instagram</p></button>
 				</li>
 				<li class="button-list__item">
-				  <button class="button button--youtube">Youtube</button>
+				  <button class="button button--youtube"><p>Youtube</p></button>
 				</li>
 				<li class="button-list__item">
-				  <button class="button button--vimeo">Vimeo</button>
+				  <button class="button button--vimeo"><p>Vimeo</p></button>
 				</li>
 			  </ul>
 			</div>
