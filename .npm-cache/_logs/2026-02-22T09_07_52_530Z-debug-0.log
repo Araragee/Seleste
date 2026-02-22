@@ -1,0 +1,41 @@
+0 verbose cli /Users/dex/.nvm/versions/node/v22.18.0/bin/node /Users/dex/.nvm/versions/node/v22.18.0/lib/node_modules/npm/bin/npm-cli.js
+1 info using npm@10.9.3
+2 info using node@v22.18.0
+3 silly config load:file:/Users/dex/.nvm/versions/node/v22.18.0/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/dex/Desktop/Essentials x Coding/Seleste/.npmrc
+5 silly config load:file:/Users/dex/.npmrc
+6 silly config load:file:/Users/dex/.nvm/versions/node/v22.18.0/etc/npmrc
+7 verbose title npm exec create-vite@latest temp-vue --template vue-ts
+8 verbose argv "exec" "--cache" ".npm-cache" "--yes" "--" "create-vite@latest" "temp-vue" "--template" "vue-ts"
+9 verbose logfile logs-max:10 dir:/Users/dex/Desktop/Essentials x Coding/Seleste/.npm-cache/_logs/2026-02-22T09_07_52_530Z-
+10 verbose logfile /Users/dex/Desktop/Essentials x Coding/Seleste/.npm-cache/_logs/2026-02-22T09_07_52_530Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:2197815296 maxSize:549453824 maxEntrySize:274726912
+13 http fetch GET 200 https://registry.npmjs.org/create-vite 103ms (cache miss)
+14 silly packumentCache heap:2197815296 maxSize:549453824 maxEntrySize:274726912
+15 silly packumentCache heap:2197815296 maxSize:549453824 maxEntrySize:274726912
+16 silly idealTree buildDeps
+17 silly fetch manifest create-vite@8.3.0
+18 silly packumentCache full:https://registry.npmjs.org/create-vite cache-miss
+19 http fetch GET 200 https://registry.npmjs.org/npm 405ms
+20 http fetch GET 200 https://registry.npmjs.org/create-vite 221ms (cache miss)
+21 silly packumentCache full:https://registry.npmjs.org/create-vite set size:undefined disposed:false
+22 silly placeDep ROOT create-vite@8.3.0 OK for:  want: 8.3.0
+23 silly reify moves {}
+24 silly audit bulk request { 'create-vite': [ '8.3.0' ] }
+25 http cache create-vite@https://registry.npmjs.org/create-vite/-/create-vite-8.3.0.tgz 0ms (cache hit)
+26 silly tarball no local data for create-vite@https://registry.npmjs.org/create-vite/-/create-vite-8.3.0.tgz. Extracting by manifest.
+27 http fetch GET 200 https://registry.npmjs.org/create-vite/-/create-vite-8.3.0.tgz 61ms (cache miss)
+28 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 234ms
+29 silly audit report {}
+30 verbose cwd /Users/dex/Desktop/Essentials x Coding/Seleste
+31 verbose os Darwin 25.3.0
+32 verbose node v22.18.0
+33 verbose npm  v10.9.3
+34 notice
+34 notice New [31mmajor[39m version of npm available! [31m10.9.3[39m -> [34m11.10.1[39m
+34 notice Changelog: [34mhttps://github.com/npm/cli/releases/tag/v11.10.1[39m
+34 notice To update run: [4mnpm install -g npm@11.10.1[24m
+34 notice  { force: true, [Symbol(proc-log.meta)]: true }
+35 verbose exit 0
+36 info ok

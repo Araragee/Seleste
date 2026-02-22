@@ -1,0 +1,39 @@
+0 verbose cli /Users/dex/.nvm/versions/node/v22.18.0/bin/node /Users/dex/.nvm/versions/node/v22.18.0/bin/npm
+1 info using npm@10.9.3
+2 info using node@v22.18.0
+3 silly config load:file:/Users/dex/.nvm/versions/node/v22.18.0/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/dex/Desktop/Essentials x Coding/Seleste/.npmrc
+5 silly config load:file:/Users/dex/.npmrc
+6 silly config load:file:/Users/dex/.nvm/versions/node/v22.18.0/etc/npmrc
+7 verbose title npm install
+8 verbose argv "--cache" ".npm-cache" "install"
+9 verbose logfile logs-max:10 dir:/Users/dex/Desktop/Essentials x Coding/Seleste/.npm-cache/_logs/2026-02-22T09_10_07_063Z-
+10 verbose logfile /Users/dex/Desktop/Essentials x Coding/Seleste/.npm-cache/_logs/2026-02-22T09_10_07_063Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:2197815296 maxSize:549453824 maxEntrySize:274726912
+13 silly idealTree buildDeps
+14 silly reify moves {}
+15 verbose stack Error: Could not read package.json: Error: ENOENT: no such file or directory, open '/Users/dex/Desktop/Essentials x Coding/Seleste/package.json'
+15 verbose stack     at async open (node:internal/fs/promises:639:25)
+15 verbose stack     at async readFile (node:internal/fs/promises:1243:14)
+15 verbose stack     at async read (/Users/dex/.nvm/versions/node/v22.18.0/lib/node_modules/npm/node_modules/@npmcli/package-json/lib/read-package.js:9:18)
+15 verbose stack     at async PackageJson.load (/Users/dex/.nvm/versions/node/v22.18.0/lib/node_modules/npm/node_modules/@npmcli/package-json/lib/index.js:132:31)
+15 verbose stack     at async PackageJson.normalize (/Users/dex/.nvm/versions/node/v22.18.0/lib/node_modules/npm/node_modules/@npmcli/package-json/lib/index.js:118:5)
+15 verbose stack     at async runScript (/Users/dex/.nvm/versions/node/v22.18.0/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/run-script.js:11:28)
+15 verbose stack     at async Install.exec (/Users/dex/.nvm/versions/node/v22.18.0/lib/node_modules/npm/lib/commands/install.js:163:9)
+15 verbose stack     at async Npm.exec (/Users/dex/.nvm/versions/node/v22.18.0/lib/node_modules/npm/lib/npm.js:207:9)
+15 verbose stack     at async module.exports (/Users/dex/.nvm/versions/node/v22.18.0/lib/node_modules/npm/lib/cli/entry.js:74:5)
+16 error code ENOENT
+17 error syscall open
+18 error path /Users/dex/Desktop/Essentials x Coding/Seleste/package.json
+19 error errno -2
+20 error enoent Could not read package.json: Error: ENOENT: no such file or directory, open '/Users/dex/Desktop/Essentials x Coding/Seleste/package.json'
+21 error enoent This is related to npm not being able to find a file.
+21 error enoent
+22 verbose cwd /Users/dex/Desktop/Essentials x Coding/Seleste
+23 verbose os Darwin 25.3.0
+24 verbose node v22.18.0
+25 verbose npm  v10.9.3
+26 verbose exit -2
+27 verbose code -2
+28 error A complete log of this run can be found in: /Users/dex/Desktop/Essentials x Coding/Seleste/.npm-cache/_logs/2026-02-22T09_10_07_063Z-debug-0.log

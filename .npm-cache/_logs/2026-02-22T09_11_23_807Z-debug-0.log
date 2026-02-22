@@ -1,0 +1,18 @@
+0 verbose cli /Users/dex/.nvm/versions/node/v22.18.0/bin/node /Users/dex/.nvm/versions/node/v22.18.0/lib/node_modules/npm/bin/npm-cli.js
+1 info using npm@10.9.3
+2 info using node@v22.18.0
+3 silly config load:file:/Users/dex/.nvm/versions/node/v22.18.0/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/dex/Desktop/Essentials x Coding/Seleste/.npmrc
+5 silly config load:file:/Users/dex/.npmrc
+6 silly config load:file:/Users/dex/.nvm/versions/node/v22.18.0/etc/npmrc
+7 verbose title npm exec tailwindcss init -p
+8 verbose argv "exec" "--cache" ".npm-cache" "--" "tailwindcss" "init" "-p"
+9 verbose logfile logs-max:10 dir:/Users/dex/Desktop/Essentials x Coding/Seleste/.npm-cache/_logs/2026-02-22T09_11_23_807Z-
+10 verbose logfile /Users/dex/Desktop/Essentials x Coding/Seleste/.npm-cache/_logs/2026-02-22T09_11_23_807Z-debug-0.log
+11 silly logfile done cleaning log files
+12 verbose cwd /Users/dex/Desktop/Essentials x Coding/Seleste
+13 verbose os Darwin 25.3.0
+14 verbose node v22.18.0
+15 verbose npm  v10.9.3
+16 verbose exit 0
+17 info ok

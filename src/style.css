@@ -1,0 +1,20 @@
+@import url('./particles.css');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply m-0 p-0 font-roboto;
+  }
+  h1 {
+    @apply text-[64px] leading-[1.2] font-black font-outfit m-0;
+  }
+  h2 {
+    @apply text-[40px] leading-[1.2] font-bold not-italic m-0;
+  }
+  p {
+    @apply tracking-[1px] font-outfit leading-relaxed m-0;
+  }
+}
+

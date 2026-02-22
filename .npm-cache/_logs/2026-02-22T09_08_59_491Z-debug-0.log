@@ -1,0 +1,35 @@
+0 verbose cli /Users/dex/.nvm/versions/node/v22.18.0/bin/node /Users/dex/.nvm/versions/node/v22.18.0/lib/node_modules/npm/bin/npm-cli.js
+1 info using npm@10.9.3
+2 info using node@v22.18.0
+3 silly config load:file:/Users/dex/.nvm/versions/node/v22.18.0/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/dex/Desktop/Essentials x Coding/Seleste/.npmrc
+5 silly config load:file:/Users/dex/.npmrc
+6 silly config load:file:/Users/dex/.nvm/versions/node/v22.18.0/etc/npmrc
+7 verbose title npm exec create-vue@latest . --ts --router --force
+8 verbose argv "exec" "--cache" ".npm-cache" "--" "create-vue@latest" "." "--ts" "--router" "--force"
+9 verbose logfile logs-max:10 dir:/Users/dex/Desktop/Essentials x Coding/Seleste/.npm-cache/_logs/2026-02-22T09_08_59_491Z-
+10 verbose logfile /Users/dex/Desktop/Essentials x Coding/Seleste/.npm-cache/_logs/2026-02-22T09_08_59_491Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:2197815296 maxSize:549453824 maxEntrySize:274726912
+13 http fetch GET 200 https://registry.npmjs.org/create-vue 349ms (cache miss)
+14 silly packumentCache heap:2197815296 maxSize:549453824 maxEntrySize:274726912
+15 silly packumentCache heap:2197815296 maxSize:549453824 maxEntrySize:274726912
+16 verbose stack Error: canceled
+16 verbose stack     at Interface.<anonymous> (/Users/dex/.nvm/versions/node/v22.18.0/lib/node_modules/npm/node_modules/read/dist/commonjs/read.js:89:21)
+16 verbose stack     at Interface.emit (node:events:518:28)
+16 verbose stack     at [_ttyWrite] [as _ttyWrite] (node:internal/readline/interface:1132:18)
+16 verbose stack     at ReadStream.onkeypress (node:internal/readline/interface:271:20)
+16 verbose stack     at ReadStream.emit (node:events:518:28)
+16 verbose stack     at emitKeys (node:internal/readline/utils:370:14)
+16 verbose stack     at emitKeys.next (<anonymous>)
+16 verbose stack     at ReadStream.onData (node:internal/readline/emitKeypressEvents:64:36)
+16 verbose stack     at ReadStream.emit (node:events:518:28)
+16 verbose stack     at addChunk (node:internal/streams/readable:561:12)
+17 error canceled
+18 verbose cwd /Users/dex/Desktop/Essentials x Coding/Seleste
+19 verbose os Darwin 25.3.0
+20 verbose node v22.18.0
+21 verbose npm  v10.9.3
+22 verbose exit 1
+23 verbose code 1
+24 error A complete log of this run can be found in: /Users/dex/Desktop/Essentials x Coding/Seleste/.npm-cache/_logs/2026-02-22T09_08_59_491Z-debug-0.log
