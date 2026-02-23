@@ -17,7 +17,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <nav :class="['sticky top-0 z-50 flex flex-wrap items-center justify-between px-5 py-2.5 transition-shadow duration-300 bg-white', { 'shadow-md': isScrolled }]">
+  <nav :class="['sticky top-0 z-50 flex flex-wrap items-center justify-between px-5 py-4 transition-all duration-300 backdrop-blur-md bg-white/80', { 'shadow-[0_10px_30px_rgba(0,0,0,0.05)]': isScrolled }]">
     <div class="flex-none logo">
       <router-link to="/">
         <img src="/assets/logo.png" alt="Pricom Logo" class="max-w-full h-auto pl-4">
