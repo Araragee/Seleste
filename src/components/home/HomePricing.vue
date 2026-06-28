@@ -2,8 +2,16 @@
 import { onMounted, ref } from 'vue'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
+import { useCartStore } from '../../stores/cart'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const cart = useCartStore()
+
+const plans = {
+  professional: { id: 'plan-professional', name: 'Professional Plan', price: 59.99, unit: 'team' },
+  starter: { id: 'plan-starter', name: 'Starter Plan', price: 12.99, unit: 'user' },
+}
 
 const sectionRef = ref<HTMLElement | null>(null)
 const prTag = ref<HTMLElement | null>(null)
@@ -63,7 +71,7 @@ onMounted(() => {
             <li class="flex items-center gap-3"><div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center shrink-0"><i class="fas fa-check text-c-green text-sm"></i></div> <span class="font-bold text-gray-800 text-base">Team collaboration feature</span></li>
             <li class="flex items-center gap-3"><div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center shrink-0"><i class="fas fa-check text-c-green text-sm"></i></div> <span class="font-bold text-gray-800 text-base">Friendly supports</span></li>
           </ul>
-          <button class="w-full bg-black text-white py-4 rounded font-bold hover:bg-gradient-to-r hover:from-[rgba(247,141,167,0.9)] hover:to-[rgba(255,105,0,0.6)] hover:shadow-lg hover:shadow-red-200 transition-all text-base uppercase tracking-wider absolute bottom-10 inset-x-10 w-[calc(100%-80px)]">Purchase Now</button>
+          <button class="w-full bg-black text-white py-4 rounded font-bold hover:bg-gradient-to-r hover:from-[rgba(247,141,167,0.9)] hover:to-[rgba(255,105,0,0.6)] hover:shadow-lg hover:shadow-red-200 transition-all text-base uppercase tracking-wider absolute bottom-10 inset-x-10 w-[calc(100%-80px)]" @click="cart.addItem(plans.professional)">Purchase Now</button>
         </div>
         
         <div :ref="el => { if(el) cardsRef[1] = el as HTMLElement }" class="flex-1 w-full bg-white border border-gray-200 rounded-[20px] p-10 pb-12 shadow-[0_10px_30px_rgba(0,0,0,0.05)] transform md:scale-95 md:translate-x-[-20px] transition-transform hover:-translate-y-2 z-0 hover:z-20 min-h-[520px]">
@@ -76,7 +84,7 @@ onMounted(() => {
             <li class="flex items-center gap-3"><div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center shrink-0"><i class="fas fa-check text-c-green text-sm"></i></div> <span class="font-bold text-gray-800 text-base">No credit card required</span></li>
             <li class="flex items-center gap-3"><div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center shrink-0"><i class="fas fa-check text-c-green text-sm"></i></div> <span class="font-bold text-gray-800 text-base">Friendly supports</span></li>
           </ul>
-          <button class="w-[calc(100%-80px)] border-2 border-black text-black bg-white py-3.5 rounded font-bold hover:bg-black hover:text-white transition-colors text-base uppercase tracking-wider absolute bottom-10 inset-x-10">Purchase Now</button>
+          <button class="w-[calc(100%-80px)] border-2 border-black text-black bg-white py-3.5 rounded font-bold hover:bg-black hover:text-white transition-colors text-base uppercase tracking-wider absolute bottom-10 inset-x-10" @click="cart.addItem(plans.starter)">Purchase Now</button>
         </div>
       </div>
     </div>

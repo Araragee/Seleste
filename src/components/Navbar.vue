@@ -1,8 +1,18 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useCartStore } from '../stores/cart'
+
+const router = useRouter()
+const cart = useCartStore()
 
 const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
+
+const startProject = () => {
+  closeMobileMenu()
+  router.push('/contact')
+}
 
 const navLinks = [
   { label: 'Home', to: '/' },
@@ -49,17 +59,17 @@ onUnmounted(() => {
     </div>
 
     <div class="flex items-center gap-4">
-      <div class="w-10 h-10 rounded-full bg-c-light-gray flex justify-center items-center">
-        <!-- Cart Icon Placeholder -->
-        <button aria-label="Cart" class="bg-[url('/assets/cart.png')] bg-[length:80%] bg-no-repeat bg-center border-none w-5 h-5 cursor-pointer hover:opacity-80 transition-opacity"></button>
-      </div>
+      <button aria-label="Open cart" class="relative w-10 h-10 rounded-full bg-c-light-gray flex justify-center items-center hover:bg-c-fair-pink transition-colors" @click="cart.toggle()">
+        <span class="bg-[url('/assets/cart.png')] bg-[length:80%] bg-no-repeat bg-center block w-5 h-5"></span>
+        <span v-if="cart.count > 0" class="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-c-red text-white text-xs font-bold flex items-center justify-center">{{ cart.count }}</span>
+      </button>
 
       <div class="hidden lg:flex flex-col text-right">
         <span class="text-sm">Hotline</span>
         <span class="text-c-red font-bold font-roboto">00 1900 8188</span>
       </div>
 
-      <button class="bg-c-black text-white rounded-[5px] px-5 py-3.5 text-base font-bold transition-colors duration-300 hover:bg-c-red hidden md:block">
+      <button class="bg-c-black text-white rounded-[5px] px-5 py-3.5 text-base font-bold transition-colors duration-300 hover:bg-c-red hidden md:block" @click="startProject">
         Start A Project
       </button>
 
@@ -92,7 +102,7 @@ onUnmounted(() => {
             <router-link :to="link.to" @click="closeMobileMenu" class="block px-4 py-3 text-c-black text-base hover:text-c-red hover:bg-c-light-gray rounded-md no-underline transition-colors" active-class="text-c-red">{{ link.label }}</router-link>
           </li>
           <li class="mt-2">
-            <button @click="closeMobileMenu" class="w-full bg-c-black text-white rounded-[5px] px-5 py-3.5 text-base font-bold transition-colors duration-300 hover:bg-c-red">
+            <button @click="startProject" class="w-full bg-c-black text-white rounded-[5px] px-5 py-3.5 text-base font-bold transition-colors duration-300 hover:bg-c-red">
               Start A Project
             </button>
           </li>

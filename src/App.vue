@@ -1,6 +1,18 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import { useHead } from '@unhead/vue'
 import DefaultLayout from './layouts/DefaultLayout.vue'
+import CartDrawer from './components/CartDrawer.vue'
+
+useHead({
+  titleTemplate: (title?: string) => (title ? `${title} | Pricom` : 'Pricom — 3D Printing & Print on Demand'),
+  meta: [
+    { name: 'description', content: 'Pricom delivers fast, high-quality 3D printing and print-on-demand services for businesses and creators.' },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:site_name', content: 'Pricom' },
+    { name: 'twitter:card', content: 'summary_large_image' },
+  ],
+})
 </script>
 
 <template>
@@ -11,6 +23,7 @@ import DefaultLayout from './layouts/DefaultLayout.vue'
       </transition>
     </router-view>
   </DefaultLayout>
+  <CartDrawer />
 </template>
 
 <style>

@@ -9,6 +9,12 @@ import HomeTestimonials from '../components/home/HomeTestimonials.vue'
 import HomeFaqs from '../components/home/HomeFaqs.vue'
 import HomePricing from '../components/home/HomePricing.vue'
 import HomeBottom from '../components/home/HomeBottom.vue'
+import { useHead } from '@unhead/vue'
+
+useHead({
+  title: 'Home',
+  meta: [{ name: 'description', content: 'Pricom — fast, high-quality 3D printing and print-on-demand services for businesses and creators.' }],
+})
 </script>
 
 <template>

@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
+import { useHead } from '@unhead/vue'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
+import { submitContactForm } from '../services/contact'
 
 gsap.registerPlugin(ScrollTrigger)
+
+useHead({
+  title: 'Contact Us',
+  meta: [{ name: 'description', content: 'Get in touch with the Pricom team — questions, quotes, and support for all your printing needs.' }],
+})
 
 const form = ref({
   firstName: '',
@@ -20,6 +27,8 @@ const errors = reactive<Record<FormField, string>>({
   message: ''
 })
 const submitted = ref(false)
+const submitting = ref(false)
+const submitError = ref('')
 
 const validateForm = () => {
   errors.firstName = form.value.firstName.trim() ? '' : 'First name is required'
@@ -29,11 +38,23 @@ const validateForm = () => {
   return !Object.values(errors).some(Boolean)
 }
 
-const submitForm = () => {
+const submitForm = async () => {
+  submitError.value = ''
   if (!validateForm()) return
-  console.log('Form submitted:', form.value)
-  submitted.value = true
-  form.value = { firstName: '', lastName: '', subject: '', message: '' }
+
+  submitting.value = true
+  try {
+    const result = await submitContactForm({ ...form.value })
+    submitted.value = true
+    submitError.value = ''
+    form.value = { firstName: '', lastName: '', subject: '', message: '' }
+    console.info('[contact]', result.message)
+  } catch (error) {
+    submitError.value = 'Something went wrong while sending your message. Please try again.'
+    console.error('[contact] submission failed', error)
+  } finally {
+    submitting.value = false
+  }
 }
 
 const inputBaseClass = 'w-full bg-gray-50 border px-6 py-4 rounded-xl focus:outline-none focus:bg-white text-lg transition-colors font-poppins shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]'
@@ -137,6 +158,9 @@ onMounted(() => {
       <p v-if="submitted" class="mb-8 text-center bg-green-50 text-c-green border border-green-200 rounded-xl px-6 py-4 font-poppins text-lg">
         Thanks! Your message has been sent successfully.
       </p>
+      <p v-if="submitError" class="mb-8 text-center bg-red-50 text-red-600 border border-red-200 rounded-xl px-6 py-4 font-poppins text-lg">
+        {{ submitError }}
+      </p>
 
       <form @submit.prevent="submitForm" novalidate class="space-y-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -159,7 +183,10 @@ onMounted(() => {
         </div>
 
         <div :ref="el => { if(el) formElementsRef[4] = el as HTMLElement }" class="text-center pt-6">
-          <button type="submit" class="bg-[#1E252C] text-white font-bold text-lg px-14 py-4 rounded-full hover:bg-c-red transition-all shadow-[0_15px_30px_rgba(0,0,0,0.2)] hover:shadow-[0_20px_40px_rgba(202,60,60,0.3)] hover:-translate-y-1 uppercase tracking-wider">Submit</button>
+          <button type="submit" :disabled="submitting" class="bg-[#1E252C] text-white font-bold text-lg px-14 py-4 rounded-full hover:bg-c-red transition-all shadow-[0_15px_30px_rgba(0,0,0,0.2)] hover:shadow-[0_20px_40px_rgba(202,60,60,0.3)] hover:-translate-y-1 uppercase tracking-wider disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 inline-flex items-center gap-3">
+            <i v-if="submitting" class="fas fa-spinner fa-spin"></i>
+            {{ submitting ? 'Sending…' : 'Submit' }}
+          </button>
         </div>
       </form>
     </section>

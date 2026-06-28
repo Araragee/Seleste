@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useHead } from '@unhead/vue'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
+useHead({
+  title: 'About Us',
+  meta: [{ name: 'description', content: 'Learn about Pricom — our story, our values, and the team behind our printing services.' }],
+})
 
 const openIndex = ref(0)
 const toggle = (index: number) => {
