@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 
@@ -12,11 +12,33 @@ const form = ref({
   message: ''
 })
 
+type FormField = keyof typeof form.value
+const errors = reactive<Record<FormField, string>>({
+  firstName: '',
+  lastName: '',
+  subject: '',
+  message: ''
+})
+const submitted = ref(false)
+
+const validateForm = () => {
+  errors.firstName = form.value.firstName.trim() ? '' : 'First name is required'
+  errors.lastName = form.value.lastName.trim() ? '' : 'Last name is required'
+  errors.subject = form.value.subject.trim() ? '' : 'Subject is required'
+  errors.message = form.value.message.trim().length >= 10 ? '' : 'Message must be at least 10 characters'
+  return !Object.values(errors).some(Boolean)
+}
+
 const submitForm = () => {
+  if (!validateForm()) return
   console.log('Form submitted:', form.value)
-  alert('Message sent successfully!')
+  submitted.value = true
   form.value = { firstName: '', lastName: '', subject: '', message: '' }
 }
+
+const inputBaseClass = 'w-full bg-gray-50 border px-6 py-4 rounded-xl focus:outline-none focus:bg-white text-lg transition-colors font-poppins shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]'
+const inputState = (field: FormField) =>
+  errors[field] ? 'border-red-500 focus:border-red-500' : 'border-gray-200 focus:border-c-red'
 
 // Animation Refs
 const introSectionRef = ref<HTMLElement | null>(null)
@@ -112,14 +134,30 @@ onMounted(() => {
         <h2 class="text-4xl md:text-[55px] font-black font-outfit text-[#1E252C] tracking-tight">Send a message</h2>
       </div>
       
-      <form @submit.prevent="submitForm" class="space-y-8">
+      <p v-if="submitted" class="mb-8 text-center bg-green-50 text-c-green border border-green-200 rounded-xl px-6 py-4 font-poppins text-lg">
+        Thanks! Your message has been sent successfully.
+      </p>
+
+      <form @submit.prevent="submitForm" novalidate class="space-y-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <input :ref="el => { if(el) formElementsRef[0] = el as HTMLElement }" type="text" v-model="form.firstName" placeholder="First Name" required class="w-full bg-gray-50 border border-gray-200 px-6 py-4 rounded-xl focus:outline-none focus:border-c-red focus:bg-white text-lg transition-colors font-poppins shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
-          <input :ref="el => { if(el) formElementsRef[1] = el as HTMLElement }" type="text" v-model="form.lastName" placeholder="Last Name" required class="w-full bg-gray-50 border border-gray-200 px-6 py-4 rounded-xl focus:outline-none focus:border-c-red focus:bg-white text-lg transition-colors font-poppins shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+          <div :ref="el => { if(el) formElementsRef[0] = el as HTMLElement }">
+            <input type="text" v-model="form.firstName" @blur="validateForm" placeholder="First Name" :class="[inputBaseClass, inputState('firstName')]">
+            <p v-if="errors.firstName" class="mt-2 text-sm text-red-500 font-poppins">{{ errors.firstName }}</p>
+          </div>
+          <div :ref="el => { if(el) formElementsRef[1] = el as HTMLElement }">
+            <input type="text" v-model="form.lastName" @blur="validateForm" placeholder="Last Name" :class="[inputBaseClass, inputState('lastName')]">
+            <p v-if="errors.lastName" class="mt-2 text-sm text-red-500 font-poppins">{{ errors.lastName }}</p>
+          </div>
         </div>
-        <input :ref="el => { if(el) formElementsRef[2] = el as HTMLElement }" type="text" v-model="form.subject" placeholder="Subject" required class="w-full bg-gray-50 border border-gray-200 px-6 py-4 rounded-xl focus:outline-none focus:border-c-red focus:bg-white text-lg transition-colors font-poppins shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
-        <textarea :ref="el => { if(el) formElementsRef[3] = el as HTMLElement }" v-model="form.message" placeholder="Message" required rows="6" class="w-full bg-gray-50 border border-gray-200 px-6 py-4 rounded-xl focus:outline-none focus:border-c-red focus:bg-white text-lg transition-colors font-poppins resize-none shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]"></textarea>
-        
+        <div :ref="el => { if(el) formElementsRef[2] = el as HTMLElement }">
+          <input type="text" v-model="form.subject" @blur="validateForm" placeholder="Subject" :class="[inputBaseClass, inputState('subject')]">
+          <p v-if="errors.subject" class="mt-2 text-sm text-red-500 font-poppins">{{ errors.subject }}</p>
+        </div>
+        <div :ref="el => { if(el) formElementsRef[3] = el as HTMLElement }">
+          <textarea v-model="form.message" @blur="validateForm" placeholder="Message" rows="6" :class="[inputBaseClass, inputState('message'), 'resize-none']"></textarea>
+          <p v-if="errors.message" class="mt-2 text-sm text-red-500 font-poppins">{{ errors.message }}</p>
+        </div>
+
         <div :ref="el => { if(el) formElementsRef[4] = el as HTMLElement }" class="text-center pt-6">
           <button type="submit" class="bg-[#1E252C] text-white font-bold text-lg px-14 py-4 rounded-full hover:bg-c-red transition-all shadow-[0_15px_30px_rgba(0,0,0,0.2)] hover:shadow-[0_20px_40px_rgba(202,60,60,0.3)] hover:-translate-y-1 uppercase tracking-wider">Submit</button>
         </div>

@@ -351,8 +351,7 @@ onMounted(() => {
     </section>
 
     <!-- Eighth Container (Ready to buy bulk) -->
-    <section ref="bulkSectionRef" class="py-32 md:py-40 bg-[url('/assets/bg-red.png')] bg-c-red text-center text-white relative">
-       <!-- Use standard background if bg-red.png not found, fallback to red color -->
+    <section ref="bulkSectionRef" class="py-32 md:py-40 bg-c-red text-center text-white relative">
        <div class="max-w-4xl mx-auto px-4 relative z-10">
          <h1 :ref="el => { if(el) bulkContentRefs[0] = el as HTMLElement }" class="text-4xl md:text-[65px] font-black font-outfit mb-8 leading-[1.1] tracking-tight">Ready to buy in bulk &<br>save up to 30%?</h1>
          <h2 :ref="el => { if(el) bulkContentRefs[1] = el as HTMLElement }" class="text-xl md:text-[22px] font-bold font-poppins mb-12 opacity-90">Printed and shipped on demand!</h2>
