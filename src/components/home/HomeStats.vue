@@ -16,18 +16,18 @@ const bottomLogosRef = ref<HTMLElement | null>(null)
 onMounted(() => {
   // Top Stats Animation
   gsap.from(titleRef.value, {
-    scrollTrigger: { trigger: sectionRef.value, start: 'top 80%', toggleActions: 'play none none reverse' },
+    scrollTrigger: { trigger: sectionRef.value, start: 'top 80%', toggleActions: 'play none none none' },
     y: 30, opacity: 0, duration: 0.5, ease: 'power3.out'
   })
 
   gsap.from(cardsRef.value, {
-    scrollTrigger: { trigger: sectionRef.value, start: 'top 70%', toggleActions: 'play none none reverse' },
+    scrollTrigger: { trigger: sectionRef.value, start: 'top 70%', toggleActions: 'play none none none' },
     y: 40, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'back.out(1)'
   })
 
   // Bottom Content Animation
   const tlBottom = gsap.timeline({
-    scrollTrigger: { trigger: bottomSectionRef.value, start: 'top 75%', toggleActions: 'play none none reverse' }
+    scrollTrigger: { trigger: bottomSectionRef.value, start: 'top 75%', toggleActions: 'play none none none' }
   })
 
   tlBottom.from(bottomMapRef.value, { scale: 0.9, opacity: 0, duration: 0.8, ease: 'power3.out' })

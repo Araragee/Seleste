@@ -67,19 +67,19 @@ const faqs = [
 onMounted(() => {
   // Intro Animation
   gsap.from(introElementsRef.value, {
-    scrollTrigger: { trigger: introSectionRef.value, start: 'top 80%', toggleActions: 'play none none reverse' },
+    scrollTrigger: { trigger: introSectionRef.value, start: 'top 80%', toggleActions: 'play none none none' },
     y: 30, opacity: 0, duration: 0.6, stagger: 0.2, ease: 'power3.out'
   })
 
   // Features Grid Animation
   gsap.from(featuresRef.value, {
-    scrollTrigger: { trigger: featuresSectionRef.value, start: 'top 80%', toggleActions: 'play none none reverse' },
+    scrollTrigger: { trigger: featuresSectionRef.value, start: 'top 80%', toggleActions: 'play none none none' },
     y: 40, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'back.out(1)'
   })
 
   // Accordion & Video Animation
   const tlAccordion = gsap.timeline({
-    scrollTrigger: { trigger: accordionSectionRef.value, start: 'top 75%', toggleActions: 'play none none reverse' }
+    scrollTrigger: { trigger: accordionSectionRef.value, start: 'top 75%', toggleActions: 'play none none none' }
   })
   tlAccordion.from(accordionTitleRef.value, { y: 30, opacity: 0, duration: 0.5, ease: 'power3.out' })
              .from(accordionFaqRefs.value, { x: -30, opacity: 0, duration: 0.5, stagger: 0.15, ease: 'power3.out' }, "-=0.2")
@@ -87,7 +87,7 @@ onMounted(() => {
 
   // Shipping Section Animation
   const tlShipping = gsap.timeline({
-    scrollTrigger: { trigger: shippingSectionRef.value, start: 'top 75%', toggleActions: 'play none none reverse' }
+    scrollTrigger: { trigger: shippingSectionRef.value, start: 'top 75%', toggleActions: 'play none none none' }
   })
   tlShipping.from(shippingImagesRef.value, { x: -50, opacity: 0, duration: 0.7, stagger: 0.2, ease: 'power3.out' })
             .from(shippingContentRefs.value, { y: 20, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out' }, "-=0.4")
@@ -95,26 +95,26 @@ onMounted(() => {
 
   // Companies Section
   gsap.from(companiesContentRef.value, {
-    scrollTrigger: { trigger: companiesSectionRef.value, start: 'top 85%', toggleActions: 'play none none reverse' },
+    scrollTrigger: { trigger: companiesSectionRef.value, start: 'top 85%', toggleActions: 'play none none none' },
     y: 30, opacity: 0, duration: 0.6, ease: 'power3.out'
   })
 
   // Customer Love Section
   const tlCustomer = gsap.timeline({
-    scrollTrigger: { trigger: customerSectionRef.value, start: 'top 80%', toggleActions: 'play none none reverse' }
+    scrollTrigger: { trigger: customerSectionRef.value, start: 'top 80%', toggleActions: 'play none none none' }
   })
   tlCustomer.from(customerTitleRef.value, { y: 30, opacity: 0, duration: 0.5, ease: 'power3.out' })
             .from(customerCarouselRef.value, { x: 50, opacity: 0, duration: 0.7, ease: 'back.out(1)' }, "-=0.3")
 
   // Team Section
   gsap.from(teamTitleRef.value, {
-    scrollTrigger: { trigger: teamSectionRef.value, start: 'top 80%', toggleActions: 'play none none reverse' },
+    scrollTrigger: { trigger: teamSectionRef.value, start: 'top 80%', toggleActions: 'play none none none' },
     y: 30, opacity: 0, duration: 0.5, ease: 'power3.out'
   })
 
   // Bulk Section
   gsap.from(bulkContentRefs.value, {
-    scrollTrigger: { trigger: bulkSectionRef.value, start: 'top 80%', toggleActions: 'play none none reverse' },
+    scrollTrigger: { trigger: bulkSectionRef.value, start: 'top 80%', toggleActions: 'play none none none' },
     y: 30, opacity: 0, duration: 0.6, stagger: 0.15, ease: 'back.out(1)'
   })
 })

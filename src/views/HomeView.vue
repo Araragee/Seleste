@@ -8,6 +8,7 @@ import HomeStats from '../components/home/HomeStats.vue'
 import HomeTestimonials from '../components/home/HomeTestimonials.vue'
 import HomeFaqs from '../components/home/HomeFaqs.vue'
 import HomePricing from '../components/home/HomePricing.vue'
+import HomeArticles from '../components/home/HomeArticles.vue'
 import HomeBottom from '../components/home/HomeBottom.vue'
 import { useHead } from '@unhead/vue'
 
@@ -28,6 +29,7 @@ useHead({
     <HomeTestimonials />
     <HomeFaqs />
     <HomePricing />
+    <HomeArticles />
     <HomeBottom />
   </div>
 </template>

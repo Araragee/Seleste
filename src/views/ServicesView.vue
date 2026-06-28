@@ -47,19 +47,19 @@ const faqs = [
 onMounted(() => {
   // Intro Animation
   gsap.from(introElementsRef.value, {
-    scrollTrigger: { trigger: introSectionRef.value, start: 'top 80%', toggleActions: 'play none none reverse' },
+    scrollTrigger: { trigger: introSectionRef.value, start: 'top 80%', toggleActions: 'play none none none' },
     y: 30, opacity: 0, duration: 0.6, stagger: 0.2, ease: 'power3.out'
   })
 
   // 4 Services First Row
   gsap.from(servicesCardsRef.value, {
-    scrollTrigger: { trigger: servicesGridRef.value, start: 'top 80%', toggleActions: 'play none none reverse' },
+    scrollTrigger: { trigger: servicesGridRef.value, start: 'top 80%', toggleActions: 'play none none none' },
     y: 40, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'back.out(1)'
   })
 
   // Fast and Quality Services (Accordion)
   const tlAccordion = gsap.timeline({
-    scrollTrigger: { trigger: accordionSectionRef.value, start: 'top 75%', toggleActions: 'play none none reverse' }
+    scrollTrigger: { trigger: accordionSectionRef.value, start: 'top 75%', toggleActions: 'play none none none' }
   })
   tlAccordion.from([accordionTitleRef.value, accordionDescRef.value], { y: 30, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out' })
              .from(accordionFaqRefs.value, { x: -30, opacity: 0, duration: 0.5, stagger: 0.15, ease: 'power3.out' }, "-=0.2")
@@ -67,14 +67,14 @@ onMounted(() => {
 
   // Fourth Container
   const tlFourCards = gsap.timeline({
-    scrollTrigger: { trigger: fourCardsSectionRef.value, start: 'top 75%', toggleActions: 'play none none reverse' }
+    scrollTrigger: { trigger: fourCardsSectionRef.value, start: 'top 75%', toggleActions: 'play none none none' }
   })
   tlFourCards.from(fourCardsContentRef.value, { x: 30, opacity: 0, duration: 0.6, ease: 'power3.out' })
              .from(fourCardsRef.value, { y: 30, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out' }, "-=0.4")
 
   // Final Carousel
   const tlFinal = gsap.timeline({
-    scrollTrigger: { trigger: finalCarouselSectionRef.value, start: 'top 80%', toggleActions: 'play none none reverse' }
+    scrollTrigger: { trigger: finalCarouselSectionRef.value, start: 'top 80%', toggleActions: 'play none none none' }
   })
   tlFinal.from(finalCarouselTitleRef.value, { y: 30, opacity: 0, duration: 0.5, ease: 'power3.out' })
          .from(finalCarouselRef.value, { y: 50, opacity: 0, duration: 0.7, ease: 'back.out(1)' }, "-=0.3")

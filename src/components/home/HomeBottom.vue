@@ -20,13 +20,13 @@ const socialBtnsRef = ref<HTMLElement[]>([])
 onMounted(() => {
   // Features section
   gsap.from(featuresRef.value, {
-    scrollTrigger: { trigger: featureSectionRef.value, start: 'top 85%', toggleActions: 'play none none reverse' },
+    scrollTrigger: { trigger: featureSectionRef.value, start: 'top 85%', toggleActions: 'play none none none' },
     y: 30, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out'
   })
 
   // App section
   const tlApp = gsap.timeline({
-    scrollTrigger: { trigger: appSectionRef.value, start: 'top 75%', toggleActions: 'play none none reverse' }
+    scrollTrigger: { trigger: appSectionRef.value, start: 'top 75%', toggleActions: 'play none none none' }
   })
   tlApp.from(appTitleRef.value, { y: 30, opacity: 0, duration: 0.5, ease: 'power3.out' })
        .from(appDescRef.value, { y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' }, "-=0.3")
@@ -35,7 +35,7 @@ onMounted(() => {
 
   // Social section
   gsap.from(socialBtnsRef.value, {
-    scrollTrigger: { trigger: socialSectionRef.value, start: 'top 95%', toggleActions: 'play none none reverse' },
+    scrollTrigger: { trigger: socialSectionRef.value, start: 'top 95%', toggleActions: 'play none none none' },
     y: 20, opacity: 0, duration: 0.4, stagger: 0.05, ease: 'back.out(1)'
   })
 })

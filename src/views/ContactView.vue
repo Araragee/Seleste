@@ -78,25 +78,25 @@ const formElementsRef = ref<HTMLElement[]>([])
 onMounted(() => {
   // Intro Animation
   gsap.from(introElementsRef.value, {
-    scrollTrigger: { trigger: introSectionRef.value, start: 'top 85%', toggleActions: 'play none none reverse' },
+    scrollTrigger: { trigger: introSectionRef.value, start: 'top 85%', toggleActions: 'play none none none' },
     y: 30, opacity: 0, duration: 0.6, stagger: 0.2, ease: 'power3.out'
   })
 
   // Contact Cards
   gsap.from(cardsRef.value, {
-    scrollTrigger: { trigger: cardsSectionRef.value, start: 'top 80%', toggleActions: 'play none none reverse' },
+    scrollTrigger: { trigger: cardsSectionRef.value, start: 'top 80%', toggleActions: 'play none none none' },
     y: 40, opacity: 0, duration: 0.6, stagger: 0.15, ease: 'back.out(1)'
   })
 
   // Map Animation
   gsap.from(mapElementRef.value, {
-    scrollTrigger: { trigger: mapSectionRef.value, start: 'top 80%', toggleActions: 'play none none reverse' },
+    scrollTrigger: { trigger: mapSectionRef.value, start: 'top 80%', toggleActions: 'play none none none' },
     y: 30, opacity: 0, duration: 0.7, ease: 'power3.out'
   })
 
   // Form Animation
   const tlForm = gsap.timeline({
-    scrollTrigger: { trigger: formSectionRef.value, start: 'top 80%', toggleActions: 'play none none reverse' }
+    scrollTrigger: { trigger: formSectionRef.value, start: 'top 80%', toggleActions: 'play none none none' }
   })
   tlForm.from(formTitleRef.value, { y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' })
         .from(formElementsRef.value, { y: 20, opacity: 0, duration: 0.4, stagger: 0.1, ease: 'power3.out' }, "-=0.2")
