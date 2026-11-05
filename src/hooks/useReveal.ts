@@ -17,9 +17,11 @@ export function useReveal<T extends HTMLElement = HTMLElement>(options: { stagge
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         const items = gsap.utils.toArray<HTMLElement>('[data-reveal]', ref.current)
         if (!items.length) return
-        gsap.from(items, {
-          y: 28,
-          opacity: 0,
+        // fromTo, not from: items with CSS `transition` report mid-transition
+        // values on StrictMode re-run, so from() would record opacity 0 as the end.
+        gsap.fromTo(items, { y: 28, opacity: 0 }, {
+          y: 0,
+          opacity: 1,
           duration: 0.7,
           ease: 'power3.out',
           stagger: options.stagger ?? 0.08,
