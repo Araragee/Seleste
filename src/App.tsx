@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { createBrowserRouter, Outlet, RouterProvider, ScrollRestoration } from 'react-router-dom'
+import { createBrowserRouter, createHashRouter, Outlet, RouterProvider, ScrollRestoration } from 'react-router-dom'
 import { Spinner } from '@/components/ui/misc'
 import { AppLayout } from '@/layouts/AppLayout'
 import { MarketingLayout } from '@/layouts/MarketingLayout'
@@ -63,7 +63,8 @@ const routes = [
   },
 ]
 
-const router = createBrowserRouter(routes)
+// Hash URLs let the static build run from any folder or embedded host without server rewrites.
+const router = (import.meta.env.VITE_ROUTER === 'hash' ? createHashRouter : createBrowserRouter)(routes)
 
 export default function App() {
   return <RouterProvider router={router} />

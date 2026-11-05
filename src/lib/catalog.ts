@@ -1,3 +1,5 @@
+import { asset } from './asset'
+
 export type ProcessId = 'FDM' | 'SLA' | 'SLS' | 'DMLS' | 'CAST'
 export type QualityId = 'draft' | 'standard' | 'fine'
 export type FinishId = 'raw' | 'sanded' | 'primed' | 'painted' | 'polished'
@@ -56,7 +58,7 @@ export const MATERIALS: Material[] = [
     process: 'FDM',
     tagline: 'Fast, affordable prototypes',
     description: 'The go-to plastic for concept models and fit checks. Rigid, crisp and available in many colors.',
-    image: '/img/material-pla.png',
+    image: asset('img/material-pla.png'),
     density: 1.24,
     pricePerCm3: 0.07,
     machineRate: 4,
@@ -97,7 +99,7 @@ export const MATERIALS: Material[] = [
     process: 'FDM',
     tagline: 'Flexible, rubber-like',
     description: 'Shore 95A elastomer for gaskets, grips, phone cases and lattice cushioning.',
-    image: '/img/material-tpu.jpg',
+    image: asset('img/material-tpu.jpg'),
     density: 1.21,
     pricePerCm3: 0.16,
     machineRate: 5,
@@ -118,7 +120,7 @@ export const MATERIALS: Material[] = [
     process: 'SLA',
     tagline: 'Smooth, high-detail surfaces',
     description: 'Stereolithography with 50 µm layers. Ideal for miniatures, dental models and visual prototypes.',
-    image: '/img/material-resin.jpg',
+    image: asset('img/material-resin.jpg'),
     density: 1.18,
     pricePerCm3: 0.22,
     machineRate: 6,
@@ -159,7 +161,7 @@ export const MATERIALS: Material[] = [
     process: 'DMLS',
     tagline: 'Lightweight metal parts',
     description: 'Direct metal laser sintering for strong, light, heat-resistant components.',
-    image: '/img/material-metal.jpg',
+    image: asset('img/material-metal.jpg'),
     density: 2.67,
     pricePerCm3: 1.9,
     machineRate: 38,
@@ -180,7 +182,7 @@ export const MATERIALS: Material[] = [
     process: 'CAST',
     tagline: 'Jewelry & fine detail',
     description: 'Printed in castable wax, then investment-cast in sterling silver. Hand finished.',
-    image: '/img/material-silver.jpg',
+    image: asset('img/material-silver.jpg'),
     density: 10.36,
     pricePerCm3: 9.5,
     machineRate: 20,

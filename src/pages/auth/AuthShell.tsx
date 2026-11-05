@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { Check } from 'lucide-react'
 import { Logo } from '@/components/ui/Logo'
+import { asset } from '@/lib/asset'
 
 export function AuthShell({ title, subtitle, children }: { title: string; subtitle: ReactNode; children: ReactNode }) {
   return (
@@ -19,7 +20,7 @@ export function AuthShell({ title, subtitle, children }: { title: string; subtit
       <div className="relative hidden overflow-hidden bg-ink p-12 text-white lg:flex lg:flex-col lg:justify-between">
         <div className="pointer-events-none absolute -top-32 -right-32 size-96 rounded-full bg-brand/35 blur-3xl" aria-hidden />
         <div className="pointer-events-none absolute -bottom-32 -left-20 size-96 rounded-full bg-indigo/35 blur-3xl" aria-hidden />
-        <img src="/img/hero.png" alt="" className="relative mx-auto mt-8 w-[85%] max-w-lg animate-float" />
+        <img src={asset('img/hero.png')} alt="" className="relative mx-auto mt-8 w-[85%] max-w-lg animate-float" />
         <div className="relative">
           <p className="text-3xl leading-tight font-bold">From STL to shipped part, all in one dashboard.</p>
           <ul className="mt-6 space-y-2.5 text-white/70">

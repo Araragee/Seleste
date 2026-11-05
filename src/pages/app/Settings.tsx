@@ -71,9 +71,18 @@ export default function Settings() {
   }
 
   const resetDemo = () => {
-    localStorage.removeItem('seleste:db')
-    localStorage.removeItem('seleste:session')
-    window.location.assign('/')
+    try {
+      localStorage.removeItem('seleste:db')
+      localStorage.removeItem('seleste:session')
+    } catch {
+      /* storage unavailable: the in-memory demo resets on reload anyway */
+    }
+    if (import.meta.env.VITE_ROUTER === 'hash') {
+      window.location.hash = '#/'
+      window.location.reload()
+    } else {
+      window.location.assign(import.meta.env.BASE_URL)
+    }
   }
 
   return (

@@ -4,6 +4,7 @@
  * any server. It mirrors the rules enforced by the Supabase policies.
  */
 import { get as idbGet, set as idbSet } from 'idb-keyval'
+import { asset } from '../asset'
 import type { PlanId } from '../catalog'
 import { calculatePrice, validateQuote } from '../pricing'
 import { buildSeed, DEMO_EMAIL, DEMO_PASSWORD } from './seed'
@@ -44,9 +45,60 @@ export interface LocalDb {
 const DB_KEY = 'seleste:db'
 const SESSION_KEY = 'seleste:session'
 
-export const idbFileStore: FileStore = {
-  get: (key) => idbGet<ArrayBuffer>(key),
-  set: (key, value) => idbSet(key, value),
+/** IndexedDB file store that falls back to memory when IndexedDB is blocked (private mode, sandboxed frames). */
+export function createIdbFileStore(): FileStore {
+  const memory = new Map<string, ArrayBuffer>()
+  return {
+    async get(key) {
+      if (memory.has(key)) return memory.get(key)
+      try {
+        return await idbGet<ArrayBuffer>(key)
+      } catch {
+        return undefined
+      }
+    },
+    async set(key, value) {
+      try {
+        await idbSet(key, value)
+      } catch {
+        memory.set(key, value)
+      }
+    },
+  }
+}
+
+class MemoryStorage implements Storage {
+  private map = new Map<string, string>()
+  get length() {
+    return this.map.size
+  }
+  clear() {
+    this.map.clear()
+  }
+  getItem(key: string) {
+    return this.map.get(key) ?? null
+  }
+  key(index: number) {
+    return [...this.map.keys()][index] ?? null
+  }
+  removeItem(key: string) {
+    this.map.delete(key)
+  }
+  setItem(key: string, value: string) {
+    this.map.set(key, value)
+  }
+}
+
+/** localStorage when usable, otherwise an in-memory stand-in so the demo still works. */
+function browserStorage(): Storage {
+  try {
+    const probe = '__seleste_probe__'
+    window.localStorage.setItem(probe, '1')
+    window.localStorage.removeItem(probe)
+    return window.localStorage
+  } catch {
+    return new MemoryStorage()
+  }
 }
 
 export async function hashPassword(password: string, salt: string): Promise<string> {
@@ -67,13 +119,13 @@ interface Options {
 }
 
 export function createLocalBackend(opts: Options = {}): Backend {
-  const storage = opts.storage ?? window.localStorage
-  const files = opts.files ?? idbFileStore
+  const storage = opts.storage ?? browserStorage()
+  const files = opts.files ?? createIdbFileStore()
   const latency = opts.latencyMs ?? 180
   const fetchPublic =
     opts.fetchPublic ??
     (async (path: string) => {
-      const res = await fetch(path)
+      const res = await fetch(asset(path))
       return res.ok ? res.arrayBuffer() : null
     })
   const listeners = new Set<(u: AuthUser | null) => void>()

@@ -10,6 +10,7 @@ import { SAMPLES } from '@/lib/backend/seed'
 import { MATERIALS } from '@/lib/catalog'
 import { formatMoney } from '@/lib/format'
 import { calculatePrice, defaultConfig } from '@/lib/pricing'
+import { asset } from '@/lib/asset'
 
 const MARQUEE = ['Instant quotes in under a second', '7 materials from PLA to sterling silver', 'Free shipping over $75', 'Every file reviewed by an engineer', 'Track every part in real time']
 
@@ -93,7 +94,7 @@ export function Hero({ onDemo }: { onDemo?: () => void }) {
         </div>
 
         <div className="relative">
-          <img data-hero="art" src="/img/hero.png" alt="Isometric illustration of a 3D printer connected to a laptop" width={760} height={622} className="mx-auto w-full max-w-[620px] animate-float" />
+          <img data-hero="art" src={asset('img/hero.png')} alt="Isometric illustration of a 3D printer connected to a laptop" width={760} height={622} className="mx-auto w-full max-w-[620px] animate-float" />
           <div data-hero="card" className="absolute top-6 -left-2 hidden w-64 rounded-2xl border border-white/60 bg-white/85 p-4 shadow-xl backdrop-blur sm:block lg:-left-10">
             <p className="text-xs font-semibold tracking-wider text-ink/40 uppercase">Instant quote</p>
             <p className="mt-1 font-semibold">spur-gear.stl</p>
@@ -121,9 +122,9 @@ export function Hero({ onDemo }: { onDemo?: () => void }) {
 }
 
 const STEPS = [
-  { img: '/img/step-upload.png', title: 'Upload your 3D file', text: 'Drop an STL. We measure volume, surface area and size right in your browser — nothing is uploaded until you order.' },
-  { img: '/img/step-production.png', title: 'Configure & order', text: 'Compare materials side by side with live prices. Pick color, quality, infill and finish, then check out in a minute.' },
-  { img: '/img/step-delivery.png', title: 'Track to your door', text: 'An engineer reviews every file. Follow your part through printing, quality check and shipping from your dashboard.' },
+  { img: asset('img/step-upload.png'), title: 'Upload your 3D file', text: 'Drop an STL. We measure volume, surface area and size right in your browser — nothing is uploaded until you order.' },
+  { img: asset('img/step-production.png'), title: 'Configure & order', text: 'Compare materials side by side with live prices. Pick color, quality, infill and finish, then check out in a minute.' },
+  { img: asset('img/step-delivery.png'), title: 'Track to your door', text: 'An engineer reviews every file. Follow your part through printing, quality check and shipping from your dashboard.' },
 ]
 
 export function HowItWorks() {
@@ -222,8 +223,8 @@ export function WhySeleste() {
   return (
     <section ref={ref} className="overflow-hidden pb-24 md:pb-32">
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-        <div data-reveal className="relative min-h-[360px] rounded-[40px] bg-[url('/img/why-bg.jpg')] bg-cover bg-center shadow-[0_30px_60px_-30px_rgb(0_0_0/0.35)] sm:min-h-[460px]">
-          <img src="/img/why.png" alt="Illustration of a 3D printer and design workstation" loading="lazy" className="absolute top-1/2 left-1/2 w-[88%] -translate-x-1/2 -translate-y-1/2 drop-shadow-2xl" />
+        <div data-reveal style={{ backgroundImage: `url(${asset('img/why-bg.jpg')})` }} className="relative min-h-[360px] rounded-[40px] bg-cover bg-center shadow-[0_30px_60px_-30px_rgb(0_0_0/0.35)] sm:min-h-[460px]">
+          <img src={asset('img/why.png')} alt="Illustration of a 3D printer and design workstation" loading="lazy" className="absolute top-1/2 left-1/2 w-[88%] -translate-x-1/2 -translate-y-1/2 drop-shadow-2xl" />
         </div>
         <div>
           <div data-reveal>

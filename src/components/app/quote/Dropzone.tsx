@@ -2,6 +2,7 @@ import { useRef, useState, type DragEvent } from 'react'
 import { FileUp, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { SAMPLES } from '@/lib/backend/seed'
+import { asset } from '@/lib/asset'
 
 interface DropzoneProps {
   onFile: (file: File) => void
@@ -74,7 +75,7 @@ export function SamplePicker({ onPick, disabled }: { onPick: (file: File) => voi
   const pick = async (file: string) => {
     setBusy(file)
     try {
-      const res = await fetch(`/samples/${file}`)
+      const res = await fetch(asset(`samples/${file}`))
       const blob = await res.blob()
       onPick(new File([blob], file, { type: 'model/stl' }))
     } finally {

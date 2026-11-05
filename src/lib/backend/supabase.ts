@@ -1,4 +1,5 @@
 import { createClient, type SupabaseClient, type User } from '@supabase/supabase-js'
+import { asset } from '../asset'
 import type { PlanId, ShippingMethod } from '../catalog'
 import { calculatePrice, validateQuote, type PriceBreakdown, type QuoteConfig } from '../pricing'
 import type { MeshMetrics } from '../stl'
@@ -236,7 +237,7 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
     async getModelFile(order) {
       if (!order.filePath) return null
       if (order.filePath.startsWith('public:')) {
-        const res = await fetch(order.filePath.slice('public:'.length))
+        const res = await fetch(asset(order.filePath.slice('public:'.length)))
         return res.ok ? res.arrayBuffer() : null
       }
       const { data, error } = await sb.storage.from(BUCKET).download(order.filePath)

@@ -2,7 +2,7 @@
   "name": "seleste",
   "private": true,
   "version": "1.0.0",
-  "description": "Seleste — instant 3D printing quotes and order management SaaS.",
+  "description": "Seleste \u2014 instant 3D printing quotes and order management SaaS.",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,7 +12,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "samples": "node scripts/generate-samples.mjs"
+    "samples": "node scripts/generate-samples.mjs",
+    "build:static": "tsc -b && vite build --base ./ --outDir dist-static"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

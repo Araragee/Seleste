@@ -82,7 +82,7 @@ scripts/              Sample model generator
 
 ## Deploying
 
-This is a static SPA. `vercel.json` and `public/_redirects` (Netlify) handle client-side routing. Set the two Supabase env vars in your host to go live, or leave them unset to deploy the demo.
+This is a static SPA. `vercel.json` and `public/_redirects` (Netlify) handle client-side routing. For hosts that can't rewrite paths, such as GitHub Pages or a sub-folder, run `VITE_ROUTER=hash npm run build:static`. It builds to `dist-static/` with relative asset paths and hash-based URLs. Set the two Supabase env vars in your host to go live, or leave them unset to deploy the demo.
 
 ## Roadmap
 
