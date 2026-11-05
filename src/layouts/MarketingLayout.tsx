@@ -30,7 +30,7 @@ function Navbar() {
 
   return (
     <header className={cn('sticky top-0 z-40 border-b bg-white/85 backdrop-blur-lg transition-all', scrolled ? 'border-ink/8 shadow-[0_10px_30px_-20px_rgb(0_0_0/0.25)]' : 'border-transparent')}>
-      <nav className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8" aria-label="Main">
+      <nav className="mx-auto flex h-[72px] max-w-7xl short:h-14 items-center justify-between px-4 sm:px-6 lg:px-8" aria-label="Main">
         <Link to="/" aria-label="Seleste home">
           <Logo />
         </Link>
@@ -63,11 +63,11 @@ function Navbar() {
         </button>
       </nav>
       {open && (
-        <div id="mobile-nav" className="border-t border-ink/8 bg-white px-4 pt-2 pb-6 md:hidden">
-          <ul className="space-y-1">
+        <div id="mobile-nav" className="max-h-[calc(100svh-72px)] overflow-y-auto overscroll-contain border-t border-ink/8 bg-white px-4 pt-2 pb-6 md:hidden short:max-h-[calc(100svh-56px)]">
+          <ul className="space-y-1 short:grid short:grid-cols-2 short:gap-1 short:space-y-0">
             {NAV.map((item) => (
               <li key={item.to}>
-                <Link to={item.to} className="block rounded-lg px-3 py-3 text-lg font-medium hover:bg-mist">
+                <Link to={item.to} className="block rounded-lg px-3 py-3 text-lg font-medium hover:bg-mist short:py-2">
                   {item.label}
                 </Link>
               </li>

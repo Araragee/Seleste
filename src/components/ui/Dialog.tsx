@@ -24,11 +24,11 @@ export function Dialog({ open, onClose, title, children }: DialogProps) {
       ref={ref}
       onClose={onClose}
       onClick={(e) => e.target === ref.current && onClose()}
-      className="m-auto w-[min(92vw,460px)] rounded-2xl bg-white p-0 text-ink shadow-2xl backdrop:bg-ink/40 backdrop:backdrop-blur-sm"
+      className="m-auto max-h-[calc(100svh-2rem)] w-[min(92vw,460px)] overflow-y-auto overscroll-contain rounded-2xl bg-white p-0 text-ink shadow-2xl backdrop:bg-ink/40 backdrop:backdrop-blur-sm"
       aria-labelledby="dialog-title"
     >
       {open && (
-        <div className="p-6">
+        <div className="p-6 short:p-5">
           <div className="mb-4 flex items-start justify-between gap-4">
             <h2 id="dialog-title" className="text-lg font-semibold">
               {title}

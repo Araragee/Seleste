@@ -27,6 +27,17 @@ interface LoadedModel {
   positions: Float32Array
 }
 
+const LAYOUT_PUBLIC = {
+  grid: 'lg:grid-cols-[minmax(0,1fr)_380px]',
+  sticky: 'lg:sticky lg:top-24 lg:self-start',
+  hideBar: 'lg:hidden',
+}
+const LAYOUT_IN_APP = {
+  grid: 'xl:grid-cols-[minmax(0,1fr)_380px]',
+  sticky: 'xl:sticky xl:top-6 xl:self-start',
+  hideBar: 'xl:hidden',
+}
+
 async function readModel(file: File): Promise<LoadedModel> {
   if (!/\.stl$/i.test(file.name)) throw new StlParseError('Please upload an .stl file.')
   const positions = parseSTL(await file.arrayBuffer())
@@ -39,6 +50,8 @@ export function QuoteBuilder({ inApp }: { inApp?: boolean }) {
   const navigate = useNavigate()
   const createOrder = useCreateOrder()
   const plan = profile.data?.plan ?? 'starter'
+  // In the app a 256px sidebar is visible from lg, so switch to two columns later.
+  const layout = inApp ? LAYOUT_IN_APP : LAYOUT_PUBLIC
 
   const [model, setModel] = useState<LoadedModel | null>(null)
   const [loading, setLoading] = useState(false)
@@ -196,7 +209,7 @@ export function QuoteBuilder({ inApp }: { inApp?: boolean }) {
             id="units"
             value={config.units}
             onChange={(e) => setConfig({ ...config, units: e.target.value as Units })}
-            className="h-9 w-40 text-sm"
+            className="h-9 w-40 text-base sm:text-sm"
           >
             <option value="mm">Millimetres</option>
             <option value="cm">Centimetres</option>
@@ -209,7 +222,7 @@ export function QuoteBuilder({ inApp }: { inApp?: boolean }) {
 
   if (step === 'checkout') {
     return (
-      <form onSubmit={placeOrder} className="grid gap-8 lg:grid-cols-[1fr_380px]" noValidate>
+      <form onSubmit={placeOrder} className={cn('grid grid-cols-1 gap-8', layout.grid)} noValidate>
         <div className="space-y-6">
           <button type="button" onClick={() => setStep('configure')} className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink/60 hover:text-ink">
             <ArrowLeft className="size-4" /> Back to configuration
@@ -253,7 +266,7 @@ export function QuoteBuilder({ inApp }: { inApp?: boolean }) {
             </Field>
           </Card>
         </div>
-        <div className="space-y-4 lg:sticky lg:top-6 lg:self-start">
+        <div className={cn('space-y-4', layout.sticky)}>
           {modelInfo}
           <PriceSummary price={price} quantity={config.quantity} plan={plan} issues={issues} shippingLabel={`Shipping (${SHIPPING[shipping].name.toLowerCase()})`}>
             <Button type="submit" size="lg" className="w-full" loading={createOrder.isPending} disabled={blocked}>
@@ -269,15 +282,15 @@ export function QuoteBuilder({ inApp }: { inApp?: boolean }) {
   }
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
+    <div className={cn('grid grid-cols-1 gap-8', layout.grid)}>
       <div className="space-y-6">
-        <div className="h-[340px] sm:h-[440px]">{viewer}</div>
+        <div className="h-[340px] sm:h-[440px] short:h-[70svh]">{viewer}</div>
         {modelInfo}
         <Card className="p-6">
           <ConfigPanel metrics={metrics} config={config} plan={plan} onChange={setConfig} />
         </Card>
       </div>
-      <div className="lg:sticky lg:top-6 lg:self-start">
+      <div className={layout.sticky}>
         <PriceSummary price={price} quantity={config.quantity} plan={plan} issues={issues}>
           <Button size="lg" className="w-full" onClick={goToCheckout} disabled={blocked}>
             {user ? 'Continue to checkout' : 'Sign up to order'} <ArrowRight className="size-4" />
@@ -287,11 +300,11 @@ export function QuoteBuilder({ inApp }: { inApp?: boolean }) {
       </div>
 
       {/* Mobile: keep the live total in reach while configuring. */}
-      <div className="h-20 lg:hidden" aria-hidden />
-      <div className="fixed inset-x-0 bottom-0 z-30 flex items-center justify-between gap-4 border-t border-white/10 bg-ink px-4 py-3 text-white lg:hidden">
+      <div className={cn('h-20 short:h-14', layout.hideBar)} aria-hidden />
+      <div className={cn('fixed inset-x-0 bottom-0 z-30 flex items-center justify-between gap-4 border-t border-white/10 bg-ink px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] text-white sm:px-6 short:pt-2 short:pb-2', layout.hideBar)}>
         <div>
           <p className="text-xs text-white/50">Total · {config.quantity} part{config.quantity > 1 ? 's' : ''}</p>
-          <p className="text-xl font-bold tabular-nums">{formatMoney(price.totalCents)}</p>
+          <p className="text-xl font-bold tabular-nums short:text-lg">{formatMoney(price.totalCents)}</p>
         </div>
         <Button onClick={goToCheckout} disabled={blocked}>
           {user ? 'Checkout' : 'Sign up to order'} <ArrowRight className="size-4" />

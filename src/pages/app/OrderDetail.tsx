@@ -28,14 +28,14 @@ function Progress({ order }: { order: Order }) {
   }
   const current = STATUS_FLOW.indexOf(order.status)
   return (
-    <ol className="grid grid-cols-5 gap-2" aria-label="Order progress">
+    <ol className="grid grid-cols-5 gap-1.5 sm:gap-2" aria-label="Order progress">
       {STATUS_FLOW.map((s, i) => {
         const done = i < current || order.status === 'delivered'
         const now = i === current && order.status !== 'delivered'
         return (
           <li key={s} className="flex flex-col gap-2" aria-current={now ? 'step' : undefined}>
             <span className={cn('h-1.5 rounded-full', done ? 'bg-mint' : now ? 'bg-sunset' : 'bg-ink/10')} />
-            <span className={cn('flex items-center gap-1 text-xs font-semibold sm:text-sm', done || now ? 'text-ink' : 'text-ink/35')}>
+            <span className={cn('flex items-center gap-1 text-[11px] leading-tight font-semibold sm:text-sm', done || now ? 'text-ink' : 'text-ink/35')}>
               {done && <Check className="hidden size-3.5 text-mint sm:block" />}
               {STATUS_LABEL[s]}
             </span>
@@ -149,10 +149,10 @@ export default function OrderDetail() {
         )}
       </Card>
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
         <div className="space-y-6">
           <Card className="overflow-hidden">
-            <div className="h-[320px] sm:h-[400px]">
+            <div className="h-[320px] sm:h-[400px] short:h-[65svh]">
               {model.isPending ? (
                 <Spinner className="h-full bg-mist" label="Loading model" />
               ) : model.data ? (
@@ -217,7 +217,7 @@ export default function OrderDetail() {
           </Card>
         </div>
 
-        <div className="space-y-6 lg:sticky lg:top-6 lg:self-start">
+        <div className="grid content-start gap-6 md:grid-cols-2 xl:sticky xl:top-6 xl:grid-cols-1 xl:self-start">
           <Card className="p-6">
             <h2 className="font-semibold">Summary</h2>
             <dl className="mt-3 divide-y divide-ink/6">

@@ -5,12 +5,12 @@ import { Logo } from '@/components/ui/Logo'
 
 export function AuthShell({ title, subtitle, children }: { title: string; subtitle: ReactNode; children: ReactNode }) {
   return (
-    <div className="grid min-h-screen lg:grid-cols-2">
-      <div className="flex flex-col px-6 py-8 sm:px-12">
+    <div className="grid min-h-svh grid-cols-1 lg:grid-cols-2">
+      <div className="flex min-w-0 flex-col px-6 py-8 short:py-5 sm:px-12">
         <Link to="/" aria-label="Seleste home">
           <Logo />
         </Link>
-        <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center py-12">
+        <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center py-12 short:py-6">
           <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
           <p className="mt-2 text-ink/55">{subtitle}</p>
           <div className="mt-8">{children}</div>

@@ -30,7 +30,8 @@ export function OrderTable({ orders, showCustomer }: { orders: Order[]; showCust
       </ul>
 
       {/* Desktop table */}
-      <table className="hidden w-full text-left text-sm md:table">
+      <div className="hidden overflow-x-auto md:block">
+      <table className="w-full min-w-[640px] text-left text-sm">
         <thead className="border-b border-ink/8 text-xs tracking-wider text-ink/45 uppercase">
           <tr>
             <th scope="col" className="px-5 py-3 font-semibold">Order</th>
@@ -68,6 +69,7 @@ export function OrderTable({ orders, showCustomer }: { orders: Order[]; showCust
           ))}
         </tbody>
       </table>
+      </div>
     </>
   )
 }

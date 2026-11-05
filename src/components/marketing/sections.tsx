@@ -56,12 +56,12 @@ export function Hero({ onDemo }: { onDemo?: () => void }) {
     <section ref={ref} className="relative overflow-hidden">
       <div className="pointer-events-none absolute -top-40 -right-40 size-[520px] rounded-full bg-peach/40 blur-3xl" aria-hidden />
       <div className="pointer-events-none absolute -bottom-40 -left-32 size-[420px] rounded-full bg-lilac blur-3xl" aria-hidden />
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1.05fr_1fr] lg:px-8">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 short:py-10 sm:px-6 md:py-24 lg:grid-cols-[1.05fr_1fr] lg:px-8">
         <div>
           <div data-hero="tag">
             <Eyebrow>3D printing on demand</Eyebrow>
           </div>
-          <h1 data-hero="title" className="mt-6 text-5xl leading-[1.02] font-black tracking-tight text-balance sm:text-6xl lg:text-7xl">
+          <h1 data-hero="title" className="mt-6 text-[2.6rem] leading-[1.02] font-black tracking-tight text-balance min-[380px]:text-5xl sm:text-6xl lg:text-7xl short:mt-4">
             Upload a model.
             <br />
             <span className="text-sunset">Get a price.</span> Get your part.

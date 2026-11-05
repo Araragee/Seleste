@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
-import { Box, RotateCcw } from 'lucide-react'
+import { Box, Minus, Plus, RotateCcw } from 'lucide-react'
 import { cn } from '@/lib/cn'
 
 interface ModelViewerProps {
@@ -21,6 +21,9 @@ interface Stage {
   grid: THREE.GridHelper | null
   home: { position: THREE.Vector3; target: THREE.Vector3 }
 }
+
+const controlClass =
+  'inline-flex h-9 min-w-9 items-center justify-center gap-1.5 rounded-lg bg-white/90 px-2 text-xs font-medium text-ink/70 shadow-sm ring-1 ring-ink/10 backdrop-blur hover:text-ink'
 
 /** Interactive WebGL preview of an STL mesh (Z-up, millimetres). */
 export default function ModelViewer({ positions, color, metallic, className }: ModelViewerProps) {
@@ -58,7 +61,12 @@ export default function ModelViewer({ positions, color, metallic, className }: M
     controls.enableDamping = true
     controls.autoRotate = true
     controls.autoRotateSpeed = 1.6
-    controls.addEventListener('start', () => (controls.autoRotate = false))
+    const stopAutoRotate = () => (controls.autoRotate = false)
+    controls.addEventListener('start', stopAutoRotate)
+    renderer.domElement.addEventListener('pointerdown', stopAutoRotate)
+    // OrbitControls sets touch-action: none, which traps page scrolling on phones.
+    // Let the browser handle vertical swipes; horizontal drags still rotate.
+    if (window.matchMedia('(pointer: coarse)').matches) renderer.domElement.style.touchAction = 'pan-y'
 
     const material = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.55, metalness: 0.05, flatShading: false })
     stageRef.current = {
@@ -154,6 +162,15 @@ export default function ModelViewer({ positions, color, metallic, className }: M
     stage.material.roughness = metallic ? 0.3 : 0.55
   }, [color, metallic])
 
+  const zoom = (factor: number) => {
+    const stage = stageRef.current
+    if (!stage) return
+    const { camera, controls } = stage
+    const offset = camera.position.clone().sub(controls.target).multiplyScalar(factor)
+    camera.position.copy(controls.target).add(offset)
+    controls.update()
+  }
+
   const resetView = () => {
     const stage = stageRef.current
     if (!stage) return
@@ -164,20 +181,25 @@ export default function ModelViewer({ positions, color, metallic, className }: M
 
   return (
     <div className={cn('relative overflow-hidden rounded-2xl bg-gradient-to-b from-mist to-white', className)}>
-      <div ref={hostRef} className="absolute inset-0 touch-none" aria-label="3D model preview" role="img" />
+      <div ref={hostRef} className="absolute inset-0" aria-label="3D model preview" role="img" />
       {unsupported ? (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-ink/50">
           <Box className="size-8" />
           <p className="text-sm">3D preview needs WebGL.</p>
         </div>
       ) : (
-        <button
-          type="button"
-          onClick={resetView}
-          className="absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-lg bg-white/90 px-2.5 py-1.5 text-xs font-medium text-ink/70 shadow-sm ring-1 ring-ink/10 backdrop-blur hover:text-ink"
-        >
-          <RotateCcw className="size-3.5" /> Reset view
-        </button>
+        <div className="absolute right-3 bottom-3 flex gap-1.5">
+          <button type="button" onClick={() => zoom(1 / 1.25)} aria-label="Zoom in" className={controlClass}>
+            <Plus className="size-4" />
+          </button>
+          <button type="button" onClick={() => zoom(1.25)} aria-label="Zoom out" className={controlClass}>
+            <Minus className="size-4" />
+          </button>
+          <button type="button" onClick={resetView} aria-label="Reset view" className={controlClass}>
+            <RotateCcw className="size-4" />
+            <span className="hidden sm:inline">Reset</span>
+          </button>
+        </div>
       )}
     </div>
   )

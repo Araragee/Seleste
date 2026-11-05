@@ -24,8 +24,8 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   ]
 
   return (
-    <div className="flex h-full flex-col">
-      <Link to="/" className="px-3 pt-1 pb-8" onClick={onNavigate}>
+    <div className="flex min-h-full flex-col">
+      <Link to="/" className="px-3 pt-1 pb-8 short:pb-4" onClick={onNavigate}>
         <Logo inverted />
       </Link>
       <nav aria-label="App" className="flex-1">
@@ -38,7 +38,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                 onClick={onNavigate}
                 className={({ isActive }) =>
                   cn(
-                    'flex items-center gap-3 rounded-xl px-3 py-2.5 text-[15px] font-medium transition-colors',
+                    'flex items-center gap-3 rounded-xl px-3 py-2.5 text-[15px] font-medium transition-colors short:py-2',
                     isActive ? 'bg-white/10 text-white' : 'text-white/55 hover:bg-white/5 hover:text-white',
                   )
                 }
@@ -87,11 +87,11 @@ export function AppLayout() {
 
   return (
     <div className="min-h-screen bg-mist lg:pl-64">
-      <aside className="fixed inset-y-0 left-0 hidden w-64 bg-ink p-4 lg:block">
+      <aside className="fixed inset-y-0 left-0 hidden w-64 overflow-y-auto overscroll-contain bg-ink p-4 lg:block">
         <SidebarContent />
       </aside>
 
-      <header className="sticky top-0 z-30 flex h-16 items-center justify-between bg-ink px-4 lg:hidden">
+      <header className="sticky top-0 z-30 flex h-16 short:static short:h-14 items-center justify-between bg-ink px-4 lg:hidden">
         <Link to="/app">
           <Logo inverted />
         </Link>
@@ -102,7 +102,7 @@ export function AppLayout() {
       {open && (
         <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
           <div className="absolute inset-0 bg-ink/60" onClick={() => setOpen(false)} />
-          <div className="absolute inset-y-0 left-0 w-72 bg-ink p-4">
+          <div className="absolute inset-y-0 left-0 w-72 max-w-[85vw] overflow-y-auto overscroll-contain bg-ink p-4">
             <button onClick={() => setOpen(false)} className="absolute top-4 right-4 rounded-lg p-1.5 text-white/60" aria-label="Close menu">
               <X className="size-5" />
             </button>
@@ -111,7 +111,7 @@ export function AppLayout() {
         </div>
       )}
 
-      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
+      <main className="mx-auto max-w-6xl px-4 py-8 short:py-5 sm:px-6 lg:px-10 lg:py-10">
         <Outlet />
       </main>
     </div>

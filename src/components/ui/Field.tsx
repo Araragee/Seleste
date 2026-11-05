@@ -2,7 +2,7 @@ import { forwardRef, useId, type InputHTMLAttributes, type ReactNode, type Selec
 import { cn } from '@/lib/cn'
 
 const control =
-  'w-full rounded-xl border border-ink/12 bg-white px-3.5 text-[15px] text-ink placeholder:text-ink/35 transition-colors focus:border-ink/40 focus:outline-none focus-visible:outline-none focus:ring-4 focus:ring-ink/5 disabled:bg-mist aria-[invalid=true]:border-brand/60'
+  'w-full rounded-xl border border-ink/12 bg-white px-3.5 text-base text-ink sm:text-[15px] placeholder:text-ink/35 transition-colors focus:border-ink/40 focus:outline-none focus-visible:outline-none focus:ring-4 focus:ring-ink/5 disabled:bg-mist aria-[invalid=true]:border-brand/60'
 
 interface FieldProps {
   label: string

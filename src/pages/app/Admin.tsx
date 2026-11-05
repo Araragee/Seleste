@@ -105,11 +105,11 @@ export default function Admin() {
             <Stat label="Booked revenue" value={formatMoney(revenue)} />
           </div>
           {view === 'board' ? (
-            <div className="scrollbar-none -mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-4 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0">
+            <div className="scrollbar-none -mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6 lg:-mx-10 lg:px-10 xl:mx-0 xl:grid xl:grid-cols-4 xl:overflow-visible xl:px-0">
               {COLUMNS.map((status) => {
                 const list = byStatus.get(status) ?? []
                 return (
-                  <section key={status} className="w-[280px] shrink-0 snap-start rounded-2xl bg-ink/[0.035] p-3 lg:w-auto" aria-label={STATUS_LABEL[status]}>
+                  <section key={status} className="w-[min(280px,82vw)] shrink-0 snap-start rounded-2xl bg-ink/[0.035] p-3 xl:w-auto" aria-label={STATUS_LABEL[status]}>
                     <h2 className="mb-3 flex items-center gap-2 px-1 text-sm font-semibold">
                       <span className={cn('size-2 rounded-full', COLUMN_ACCENT[status])} />
                       {STATUS_LABEL[status]}

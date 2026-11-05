@@ -14,6 +14,7 @@
 - **Customer dashboard.** KPIs, order history with filters and search, a per-order progress tracker, an event timeline, cancellation, and one-click reorder.
 - **Admin production board.** A kanban view of review → printing → QC → shipped, with enforced status transitions, required tracking numbers, due dates and overdue flags.
 - **Plans.** Starter, Pro and Business tiers that change discounts, queue priority and shipping.
+- **Responsive in both orientations.** Layouts are checked from 320 px phones to iPad landscape. Short landscape screens get compact headers and scrollable menus, the 3D viewer lets vertical swipes scroll the page, and inputs stay at 16 px so iOS doesn't zoom on focus.
 - **Two backends, one interface.** Runs fully in the browser in demo mode (localStorage + IndexedDB), or against **Supabase** (Postgres, Auth, Storage) with row-level security.
 
 | Quote builder | Order detail |

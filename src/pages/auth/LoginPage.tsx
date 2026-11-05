@@ -52,7 +52,7 @@ export default function LoginPage() {
     >
       {demo && (
         <>
-          <Button variant="dark" size="lg" className="w-full" onClick={demo}>
+          <Button variant="dark" size="lg" className="h-auto min-h-14 w-full py-3 whitespace-normal" onClick={demo}>
             <PlayCircle className="size-5" /> Continue with demo account
           </Button>
           <div className="my-6 flex items-center gap-3 text-xs text-ink/40">

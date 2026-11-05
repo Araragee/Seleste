@@ -51,7 +51,7 @@ export default function Dashboard() {
             />
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
+          <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
             <Card>
               <div className="flex items-center justify-between border-b border-ink/8 px-5 py-4">
                 <h2 className="font-semibold">Recent orders</h2>
@@ -72,7 +72,7 @@ export default function Dashboard() {
               )}
             </Card>
 
-            <div className="space-y-6">
+            <div className="grid content-start gap-6 md:grid-cols-2 xl:grid-cols-1">
               <Card className="overflow-hidden bg-ink text-white">
                 <div className="p-6">
                   <p className="text-sm text-white/50">Current plan</p>
