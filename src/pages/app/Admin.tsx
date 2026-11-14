@@ -1,11 +1,13 @@
 import { useMemo, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
-import { Clock, LayoutGrid, List } from 'lucide-react'
+import { ChartNoAxesColumn, Clock, LayoutGrid, List } from 'lucide-react'
+import { BarChart, Breakdown } from '@/components/app/charts'
 import { AdvanceOrder } from '@/components/app/AdvanceOrder'
 import { OrderTable } from '@/components/app/OrderTable'
 import { PageHeader } from '@/components/app/PageHeader'
 import { Card, ErrorState, Spinner, Stat } from '@/components/ui/misc'
 import { useAdminOrders, useProfile } from '@/hooks/queries'
+import { groupTotals, monthlyTotals } from '@/lib/analytics'
 import { STATUS_LABEL, type Order, type OrderStatus } from '@/lib/backend/types'
 import { getMaterial } from '@/lib/catalog'
 import { cn } from '@/lib/cn'
@@ -55,10 +57,73 @@ function OrderCard({ order }: { order: Order }) {
   )
 }
 
+const money0 = (c: number) => formatMoney(Math.round(c / 100) * 100).replace(/\.00$/, '')
+
+function Insights({ orders }: { orders: Order[] }) {
+  const months = monthlyTotals(orders)
+  const billed = orders.filter((o) => o.status !== 'cancelled')
+  const revenue = billed.reduce((s, o) => s + o.pricing.totalCents, 0)
+  const customers = groupTotals(orders, (o) => o.customerName)
+  const materials = groupTotals(orders, (o) => getMaterial(o.config.materialId).name)
+  const processes = groupTotals(orders, (o) => getMaterial(o.config.materialId).process)
+  return (
+    <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
+      <Card className="p-6 xl:col-span-2">
+        <div className="flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <h2 className="font-semibold">Revenue</h2>
+            <p className="text-sm text-ink/50">Last 6 months, excluding cancelled</p>
+          </div>
+          <p className="text-sm text-ink/55">
+            Avg. order <span className="text-xl font-bold text-ink tabular-nums">{formatMoney(billed.length ? revenue / billed.length : 0)}</span>
+          </p>
+        </div>
+        <BarChart className="mt-6" format={money0} data={months.map((m) => ({ label: m.label, value: m.cents, hint: `${m.count} orders` }))} />
+      </Card>
+      <Card className="p-6">
+        <h2 className="font-semibold">By process</h2>
+        <p className="mb-5 text-sm text-ink/50">Share of revenue</p>
+        <Breakdown format={money0} data={processes.map((b) => ({ label: b.label, value: b.cents, hint: `${Math.round((b.cents / Math.max(1, revenue)) * 100)}%` }))} />
+      </Card>
+      <Card className="p-6 xl:col-span-2">
+        <h2 className="font-semibold">Top customers</h2>
+        <table className="mt-4 w-full text-left text-sm">
+          <thead className="text-xs tracking-wider text-ink/45 uppercase">
+            <tr>
+              <th scope="col" className="pb-2 font-semibold">Customer</th>
+              <th scope="col" className="pb-2 text-right font-semibold">Orders</th>
+              <th scope="col" className="pb-2 text-right font-semibold">Revenue</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-ink/6">
+            {customers.slice(0, 6).map((c) => (
+              <tr key={c.label}>
+                <td className="py-3">
+                  <span className="flex items-center gap-3 font-medium">
+                    <span className="flex size-8 items-center justify-center rounded-full bg-mist text-xs font-bold text-ink/60">{c.label.slice(0, 1)}</span>
+                    {c.label}
+                  </span>
+                </td>
+                <td className="py-3 text-right tabular-nums text-ink/60">{c.count}</td>
+                <td className="py-3 text-right font-semibold tabular-nums">{formatMoney(c.cents)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Card>
+      <Card className="p-6">
+        <h2 className="font-semibold">By material</h2>
+        <p className="mb-5 text-sm text-ink/50">All time</p>
+        <Breakdown format={money0} data={materials.map((b) => ({ label: b.label, value: b.cents, hint: `${b.count}×` }))} />
+      </Card>
+    </div>
+  )
+}
+
 export default function Admin() {
   const profile = useProfile()
   const orders = useAdminOrders()
-  const [view, setView] = useState<'board' | 'list'>('board')
+  const [view, setView] = useState<'board' | 'list' | 'insights'>('board')
 
   const byStatus = useMemo(() => {
     const map = new Map<OrderStatus, Order[]>()
@@ -83,6 +148,7 @@ export default function Admin() {
             {[
               { id: 'board' as const, icon: LayoutGrid, label: 'Board' },
               { id: 'list' as const, icon: List, label: 'List' },
+              { id: 'insights' as const, icon: ChartNoAxesColumn, label: 'Insights' },
             ].map(({ id, icon: Icon, label }) => (
               <button key={id} role="tab" aria-selected={view === id} onClick={() => setView(id)} className={cn('inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-semibold', view === id ? 'bg-ink text-white' : 'text-ink/55')}>
                 <Icon className="size-4" /> {label}
@@ -128,10 +194,12 @@ export default function Admin() {
                 )
               })}
             </div>
-          ) : (
+          ) : view === 'list' ? (
             <Card>
               <OrderTable orders={all} showCustomer />
             </Card>
+          ) : (
+            <Insights orders={all} />
           )}
         </>
       )}

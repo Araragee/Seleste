@@ -27,9 +27,9 @@ export function useOrder(id: string) {
   return useQuery({ queryKey: keys.order(id), queryFn: () => backend.getOrder(id) })
 }
 
-export function useAdminOrders() {
+export function useAdminOrders(enabled = true) {
   const backend = useBackend()
-  return useQuery({ queryKey: keys.adminOrders, queryFn: () => backend.adminListOrders() })
+  return useQuery({ queryKey: keys.adminOrders, queryFn: () => backend.adminListOrders(), enabled })
 }
 
 function useOrderSaved() {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { Check } from 'lucide-react'
 import { AddressFields } from '@/components/app/AddressFields'
@@ -7,12 +7,13 @@ import { PageHeader } from '@/components/app/PageHeader'
 import { Button } from '@/components/ui/Button'
 import { Field, Input } from '@/components/ui/Field'
 import { Card, ErrorState, Spinner } from '@/components/ui/misc'
-import { useChangePlan, useProfile, useUpdateProfile } from '@/hooks/queries'
+import { useChangePlan, useOrders, useProfile, useUpdateProfile } from '@/hooks/queries'
 import { useAuth } from '@/hooks/useAuth'
 import { useBackend } from '@/lib/backend/context'
 import { EMPTY_ADDRESS, type Address } from '@/lib/backend/types'
 import { PLANS, type PlanId } from '@/lib/catalog'
 import { cn } from '@/lib/cn'
+import { formatDate, formatMoney } from '@/lib/format'
 import { addressSchema, validate, type FieldErrors } from '@/lib/validation'
 
 export default function Settings() {
@@ -21,6 +22,7 @@ export default function Settings() {
   const profile = useProfile()
   const updateProfile = useUpdateProfile()
   const changePlan = useChangePlan()
+  const invoices = (useOrders().data ?? []).filter((o) => o.status !== 'cancelled').slice(0, 6)
   const [params] = useSearchParams()
   const suggested = params.get('plan') as PlanId | null
 
@@ -73,6 +75,7 @@ export default function Settings() {
   const resetDemo = () => {
     localStorage.removeItem('seleste:db')
     localStorage.removeItem('seleste:session')
+    localStorage.removeItem('seleste:notifications-seen')
     window.location.assign('/')
   }
 
@@ -154,6 +157,33 @@ export default function Settings() {
               )
             })}
           </div>
+        </Card>
+
+        <Card className="p-6">
+          <h2 className="text-lg font-semibold">Billing history</h2>
+          <p className="mt-1 text-sm text-ink/55">An invoice is issued for every order.</p>
+          {invoices.length ? (
+            <ul className="mt-4 divide-y divide-ink/6">
+              {invoices.map((o) => (
+                <li key={o.id} className="flex items-center justify-between gap-4 py-3 text-sm">
+                  <div className="min-w-0">
+                    <p className="font-semibold tabular-nums">INV-{o.number.replace(/\D/g, '')}</p>
+                    <p className="truncate text-ink/50">
+                      {formatDate(o.createdAt)} · {o.fileName}
+                    </p>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-4">
+                    <span className="font-semibold tabular-nums">{formatMoney(o.pricing.totalCents)}</span>
+                    <Link to={`/app/orders/${o.id}/invoice`} className="font-semibold text-ink/55 hover:text-brand">
+                      View
+                    </Link>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-4 text-sm text-ink/45">No invoices yet.</p>
+          )}
         </Card>
 
         <Card className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">

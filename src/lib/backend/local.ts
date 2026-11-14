@@ -33,7 +33,7 @@ export interface LocalUser {
 }
 
 export interface LocalDb {
-  version: 1
+  version: 2
   users: LocalUser[]
   profiles: Profile[]
   orders: Order[]
@@ -86,7 +86,7 @@ export function createLocalBackend(opts: Options = {}): Backend {
     if (raw) {
       try {
         const parsed = JSON.parse(raw) as LocalDb
-        if (parsed.version === 1) return parsed
+        if (parsed.version === 2) return parsed
       } catch {
         /* fall through and reseed */
       }

@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, Boxes, CircleDollarSign, Package, PlusCircle, Timer, Zap } from 'lucide-react'
+import { BarChart, Breakdown } from '@/components/app/charts'
 import { PageHeader } from '@/components/app/PageHeader'
 import { OrderTable } from '@/components/app/OrderTable'
 import { ButtonLink } from '@/components/ui/Button'
-import { Card, EmptyState, ErrorState, Spinner, Stat } from '@/components/ui/misc'
+import { Card, EmptyState, ErrorState, Spinner, Stat, StatusBadge } from '@/components/ui/misc'
 import { useOrders, useProfile } from '@/hooks/queries'
+import { groupTotals, monthlyTotals } from '@/lib/analytics'
 import { isActive } from '@/lib/backend/types'
-import { PLANS } from '@/lib/catalog'
-import { formatMoney } from '@/lib/format'
+import { PLANS, getMaterial } from '@/lib/catalog'
+import { formatMoney, relativeTime } from '@/lib/format'
 
 export default function Dashboard() {
   const profile = useProfile()
@@ -20,6 +22,15 @@ export default function Dashboard() {
   const spent = placed.reduce((sum, o) => sum + o.pricing.totalCents, 0)
   const parts = placed.reduce((sum, o) => sum + o.config.quantity, 0)
   const plan = profile.data ? PLANS[profile.data.plan] : null
+  const months = monthlyTotals(list)
+  const thisMonth = months[months.length - 1]
+  const lastMonth = months[months.length - 2]
+  const materials = groupTotals(list, (o) => getMaterial(o.config.materialId).name).slice(0, 5)
+  const activity = list
+    .flatMap((o) => o.events.map((e) => ({ ...e, order: o })))
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+    .slice(0, 6)
+  const money0 = (c: number) => formatMoney(Math.round(c / 100) * 100).replace(/\.00$/, '')
 
   return (
     <>
@@ -50,6 +61,34 @@ export default function Dashboard() {
               hint="Plan + volume discounts"
             />
           </div>
+
+          {placed.length > 0 && (
+            <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
+              <Card className="p-6">
+                <div className="flex flex-wrap items-end justify-between gap-2">
+                  <div>
+                    <h2 className="font-semibold">Spend</h2>
+                    <p className="text-sm text-ink/50">Last 6 months</p>
+                  </div>
+                  <p className="text-sm text-ink/55">
+                    <span className="text-xl font-bold text-ink tabular-nums">{formatMoney(thisMonth.cents)}</span> this month
+                    {lastMonth.cents > 0 && (
+                      <span className={thisMonth.cents >= lastMonth.cents ? 'ml-2 font-semibold text-mint' : 'ml-2 font-semibold text-ink/45'}>
+                        {thisMonth.cents >= lastMonth.cents ? '+' : '−'}
+                        {Math.abs(Math.round((thisMonth.cents / lastMonth.cents - 1) * 100))}% vs {lastMonth.label}
+                      </span>
+                    )}
+                  </p>
+                </div>
+                <BarChart className="mt-6" format={money0} data={months.map((m) => ({ label: m.label, value: m.cents, hint: `${m.count} order${m.count === 1 ? '' : 's'}` }))} />
+              </Card>
+              <Card className="p-6">
+                <h2 className="font-semibold">Spend by material</h2>
+                <p className="mb-5 text-sm text-ink/50">All time</p>
+                <Breakdown format={money0} data={materials.map((m) => ({ label: m.label, value: m.cents, hint: `${m.count}×` }))} />
+              </Card>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
             <Card>
@@ -88,12 +127,26 @@ export default function Dashboard() {
                 </div>
               </Card>
               <Card className="p-6">
-                <h2 className="font-semibold">Quick start</h2>
-                <ol className="mt-4 space-y-3 text-sm text-ink/65">
-                  <li className="flex gap-3"><span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-mist text-xs font-bold">1</span>Export your part as STL</li>
-                  <li className="flex gap-3"><span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-mist text-xs font-bold">2</span>Compare materials and finishes</li>
-                  <li className="flex gap-3"><span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-mist text-xs font-bold">3</span>Place the order and track it here</li>
-                </ol>
+                <h2 className="font-semibold">Recent activity</h2>
+                {activity.length ? (
+                  <ol className="mt-4 space-y-4">
+                    {activity.map((e) => (
+                      <li key={e.id} className="text-sm">
+                        <div className="flex items-center justify-between gap-2">
+                          <Link to={`/app/orders/${e.order.id}`} className="font-semibold hover:text-brand">
+                            {e.order.number}
+                          </Link>
+                          <StatusBadge status={e.status} />
+                        </div>
+                        <p className="mt-0.5 text-ink/50">
+                          {e.note || e.order.fileName} · {relativeTime(e.createdAt)}
+                        </p>
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <p className="mt-4 text-sm text-ink/50">Order updates will show up here.</p>
+                )}
               </Card>
             </div>
           </div>

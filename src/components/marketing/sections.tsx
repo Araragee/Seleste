@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { ArrowRight, BadgeCheck, Check, Gauge, PackageCheck, PlayCircle, ScanSearch, Sparkles } from 'lucide-react'
+import { ArrowRight, BadgeCheck, Check, Gauge, PackageCheck, PlayCircle, ScanSearch, Sparkles, Star } from 'lucide-react'
 import { ButtonLink } from '@/components/ui/Button'
 import { Eyebrow } from '@/components/ui/misc'
 import { useReveal } from '@/hooks/useReveal'
@@ -277,6 +277,50 @@ export function Capabilities() {
             </div>
           ))}
         </dl>
+      </div>
+    </section>
+  )
+}
+
+// Fictional customers: this is a demo product.
+const TESTIMONIALS = [
+  { quote: 'We went from emailing STLs back and forth to a price in the time it takes to drag a file. Our prototype loop dropped from a week to two days.', name: 'Maya Chen', role: 'Mechanical lead, Orbit Robotics' },
+  { quote: 'The live price while I change material and infill is the feature. I finally understand what I am paying for before I order.', name: 'Tom Becker', role: 'Founder, Becker Bikes' },
+  { quote: 'Silver rings, cast and polished, tracked from review to my door. The finish was better than my local caster.', name: 'Lena Fischer', role: 'Jewelry designer' },
+]
+
+export function Testimonials() {
+  const ref = useReveal<HTMLElement>({ stagger: 0.1 })
+  return (
+    <section ref={ref} className="py-24 md:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <div data-reveal>
+            <Eyebrow>Loved by makers</Eyebrow>
+          </div>
+          <h2 data-reveal className="mt-5 text-4xl font-black tracking-tight sm:text-5xl">
+            Engineers ship faster with Seleste
+          </h2>
+        </div>
+        <ul className="mt-14 grid gap-6 md:grid-cols-3">
+          {TESTIMONIALS.map((t) => (
+            <li key={t.name} data-reveal className="flex flex-col rounded-3xl border border-ink/6 bg-white p-8 shadow-[0_20px_50px_-30px_rgb(0_0_0/0.25)]">
+              <p className="flex gap-0.5 text-star" aria-label="5 out of 5 stars">
+                {Array.from({ length: 5 }, (_, i) => (
+                  <Star key={i} className="size-4 fill-current" aria-hidden />
+                ))}
+              </p>
+              <blockquote className="mt-5 flex-1 text-lg leading-relaxed text-ink/75">“{t.quote}”</blockquote>
+              <div className="mt-7 flex items-center gap-3">
+                <span className="flex size-11 items-center justify-center rounded-full bg-sunset font-bold text-white">{t.name.slice(0, 1)}</span>
+                <div>
+                  <p className="font-semibold">{t.name}</p>
+                  <p className="text-sm text-ink/50">{t.role}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )

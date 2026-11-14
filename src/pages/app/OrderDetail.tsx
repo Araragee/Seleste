@@ -2,9 +2,9 @@ import { lazy, Suspense, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { ArrowLeft, Check, Copy, FileBox, RefreshCw, Truck, XCircle } from 'lucide-react'
+import { ArrowLeft, Check, Copy, FileBox, ReceiptText, RefreshCw, Truck, XCircle } from 'lucide-react'
 import { AdvanceOrder } from '@/components/app/AdvanceOrder'
-import { Button } from '@/components/ui/Button'
+import { Button, ButtonLink } from '@/components/ui/Button'
 import { Dialog } from '@/components/ui/Dialog'
 import { Card, ErrorState, Spinner, StatusBadge } from '@/components/ui/misc'
 import { useCancelOrder, useOrder, useProfile } from '@/hooks/queries'
@@ -123,6 +123,9 @@ export default function OrderDetail() {
               Cancel order
             </Button>
           )}
+          <ButtonLink variant="outline" to={`/app/orders/${o.id}/invoice`}>
+            <ReceiptText className="size-4" /> Invoice
+          </ButtonLink>
           {isOwner && (
             <Button variant="outline" onClick={reorder} disabled={!model.data}>
               <RefreshCw className="size-4" /> Reorder

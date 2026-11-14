@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Navigate, Outlet, useLocation } from 'react-router-dom'
-import { Factory, LayoutDashboard, LogOut, Menu, Package, PlusCircle, Settings, X } from 'lucide-react'
+import { Factory, LayoutDashboard, LogOut, Menu, Package, PlusCircle, Search, Settings, X } from 'lucide-react'
+import { CommandPalette } from '@/components/app/CommandPalette'
+import { Notifications } from '@/components/app/Notifications'
 import { Logo } from '@/components/ui/Logo'
 import { Spinner } from '@/components/ui/misc'
 import { useProfile } from '@/hooks/queries'
@@ -76,28 +78,46 @@ export function AppLayout() {
   const { user, loading } = useAuth()
   const location = useLocation()
   const [open, setOpen] = useState(false)
+  const [palette, setPalette] = useState(false)
 
   useEffect(() => {
     setOpen(false)
     window.scrollTo(0, 0)
   }, [location.pathname])
 
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        setPalette((v) => !v)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
   if (loading) return <Spinner className="h-screen" />
   if (!user) return <Navigate to={`/login?next=${encodeURIComponent(location.pathname)}`} replace />
 
   return (
-    <div className="min-h-screen bg-mist lg:pl-64">
-      <aside className="fixed inset-y-0 left-0 hidden w-64 overflow-y-auto overscroll-contain bg-ink p-4 lg:block">
+    <div className="min-h-screen bg-mist lg:pl-64 print:bg-white print:pl-0">
+      <aside className="fixed inset-y-0 left-0 hidden w-64 overflow-y-auto overscroll-contain bg-ink p-4 lg:block print:hidden">
         <SidebarContent />
       </aside>
 
-      <header className="sticky top-0 z-30 flex h-16 short:static short:h-14 items-center justify-between bg-ink px-4 lg:hidden">
+      <header className="sticky top-0 z-30 flex h-16 short:static short:h-14 items-center justify-between bg-ink px-4 lg:hidden print:hidden">
         <Link to="/app">
           <Logo inverted />
         </Link>
-        <button onClick={() => setOpen(true)} className="rounded-lg p-2 text-white" aria-label="Open menu">
-          <Menu className="size-6" />
-        </button>
+        <div className="flex items-center gap-1">
+          <button onClick={() => setPalette(true)} className="rounded-xl p-2.5 text-white/70 hover:bg-white/10 hover:text-white" aria-label="Search">
+            <Search className="size-5" />
+          </button>
+          <Notifications className="text-white/70 hover:bg-white/10 hover:text-white [&>span]:ring-ink" />
+          <button onClick={() => setOpen(true)} className="rounded-lg p-2 text-white" aria-label="Open menu">
+            <Menu className="size-6" />
+          </button>
+        </div>
       </header>
       {open && (
         <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
@@ -110,6 +130,21 @@ export function AppLayout() {
           </div>
         </div>
       )}
+
+      <div className="sticky top-0 z-20 hidden border-b border-ink/6 bg-mist/85 backdrop-blur lg:block print:hidden">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-10">
+          <button
+            onClick={() => setPalette(true)}
+            className="flex h-10 w-80 items-center gap-2.5 rounded-xl bg-white px-3.5 text-sm text-ink/40 ring-1 ring-ink/8 transition hover:ring-ink/25"
+          >
+            <Search className="size-4" />
+            Search orders, files, pages…
+            <kbd className="ml-auto rounded-md bg-mist px-1.5 py-0.5 text-xs font-semibold text-ink/45">⌘K</kbd>
+          </button>
+          <Notifications className="text-ink/55 hover:bg-white hover:text-ink [&>span]:ring-mist" />
+        </div>
+      </div>
+      <CommandPalette open={palette} onClose={() => setPalette(false)} />
 
       <main className="mx-auto max-w-6xl px-4 py-8 short:py-5 sm:px-6 lg:px-10 lg:py-10">
         <Outlet />

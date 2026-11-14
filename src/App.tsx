@@ -15,6 +15,7 @@ const Dashboard = lazy(() => import('@/pages/app/Dashboard'))
 const NewQuote = lazy(() => import('@/pages/app/NewQuote'))
 const Orders = lazy(() => import('@/pages/app/Orders'))
 const OrderDetail = lazy(() => import('@/pages/app/OrderDetail'))
+const Invoice = lazy(() => import('@/pages/app/Invoice'))
 const Settings = lazy(() => import('@/pages/app/Settings'))
 const Admin = lazy(() => import('@/pages/app/Admin'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
@@ -55,6 +56,7 @@ const routes = [
           { path: 'quote', element: <NewQuote /> },
           { path: 'orders', element: <Orders /> },
           { path: 'orders/:id', element: <OrderDetail /> },
+          { path: 'orders/:id/invoice', element: <Invoice /> },
           { path: 'settings', element: <Settings /> },
           { path: 'admin', element: <Admin /> },
         ],
