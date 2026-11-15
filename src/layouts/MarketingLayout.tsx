@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
-import { Menu, X } from 'lucide-react'
+import { ArrowRight, Menu, X } from 'lucide-react'
 import { ButtonLink } from '@/components/ui/Button'
 import { Logo } from '@/components/ui/Logo'
 import { useAuth } from '@/hooks/useAuth'
@@ -29,18 +29,29 @@ function Navbar() {
   useEffect(() => setOpen(false), [location.pathname, location.hash])
 
   return (
-    <header className={cn('sticky top-0 z-40 border-b bg-white/85 backdrop-blur-lg transition-all', scrolled ? 'border-ink/8 shadow-[0_10px_30px_-20px_rgb(0_0_0/0.25)]' : 'border-transparent')}>
-      <nav className="mx-auto flex h-[72px] max-w-7xl short:h-14 items-center justify-between px-4 sm:px-6 lg:px-8" aria-label="Main">
-        <Link to="/" aria-label="Seleste home">
+    <header className="sticky top-0 z-40 px-3 pt-4 sm:px-5 short:pt-3">
+      <nav
+        aria-label="Main"
+        className={cn(
+          'mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-4 rounded-2xl border px-4 transition-all duration-300 sm:px-5 short:h-14',
+          scrolled || open
+            ? 'max-w-5xl border-ink/8 bg-white/80 shadow-[0_12px_40px_-18px_rgb(20_27_34/0.35)] backdrop-blur-xl'
+            : 'border-transparent bg-transparent',
+        )}
+      >
+        <Link to="/" aria-label="Seleste home" className="shrink-0">
           <Logo />
         </Link>
-        <ul className="hidden items-center gap-1 md:flex">
+        <ul className="hidden items-center rounded-full bg-ink/[0.04] p-1 md:flex">
           {NAV.map((item) => (
             <li key={item.to}>
               <NavLink
                 to={item.to}
                 className={({ isActive }) =>
-                  cn('rounded-lg px-4 py-2 text-[15px] font-medium transition-colors hover:text-brand', isActive && !item.to.includes('#') ? 'text-brand' : 'text-ink/75')
+                  cn(
+                    'block rounded-full px-4 py-2 text-[15px] font-medium transition-all',
+                    isActive && !item.to.includes('#') ? 'bg-white text-ink shadow-sm' : 'text-ink/60 hover:bg-white/70 hover:text-ink',
+                  )
                 }
               >
                 {item.label}
@@ -48,13 +59,19 @@ function Navbar() {
             </li>
           ))}
         </ul>
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden shrink-0 items-center gap-1.5 md:flex">
           {user ? (
-            <ButtonLink to="/app" variant="dark">Dashboard</ButtonLink>
+            <ButtonLink to="/app" variant="dark" size="sm" className="h-10 px-4">
+              Dashboard <ArrowRight className="size-4" />
+            </ButtonLink>
           ) : (
             <>
-              <ButtonLink to="/login" variant="ghost">Sign in</ButtonLink>
-              <ButtonLink to="/quote" variant="primary">Get a quote</ButtonLink>
+              <ButtonLink to="/login" variant="ghost" size="sm" className="h-10 px-4">
+                Sign in
+              </ButtonLink>
+              <ButtonLink to="/quote" size="sm" className="h-10 px-4">
+                Get a quote
+              </ButtonLink>
             </>
           )}
         </div>
@@ -63,17 +80,20 @@ function Navbar() {
         </button>
       </nav>
       {open && (
-        <div id="mobile-nav" className="max-h-[calc(100svh-72px)] overflow-y-auto overscroll-contain border-t border-ink/8 bg-white px-4 pt-2 pb-6 md:hidden short:max-h-[calc(100svh-56px)]">
+        <div
+          id="mobile-nav"
+          className="mx-auto mt-2 max-h-[calc(100svh-104px)] max-w-5xl overflow-y-auto overscroll-contain rounded-2xl border border-ink/8 bg-white p-3 shadow-[0_24px_60px_-20px_rgb(20_27_34/0.4)] md:hidden short:max-h-[calc(100svh-80px)]"
+        >
           <ul className="space-y-1 short:grid short:grid-cols-2 short:gap-1 short:space-y-0">
             {NAV.map((item) => (
               <li key={item.to}>
-                <Link to={item.to} className="block rounded-lg px-3 py-3 text-lg font-medium hover:bg-mist short:py-2">
+                <Link to={item.to} className="block rounded-xl px-3 py-3 text-lg font-medium hover:bg-mist short:py-2">
                   {item.label}
                 </Link>
               </li>
             ))}
           </ul>
-          <div className="mt-4 grid grid-cols-2 gap-3">
+          <div className="mt-3 grid grid-cols-2 gap-2 border-t border-ink/8 pt-3">
             {user ? (
               <ButtonLink to="/app" variant="dark" className="col-span-2">Dashboard</ButtonLink>
             ) : (

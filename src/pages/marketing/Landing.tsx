@@ -7,8 +7,8 @@ export default function Landing() {
   const demo = useDemoLogin()
   return (
     <>
-      <Marquee />
       <Hero onDemo={demo} />
+      <Marquee />
       <HowItWorks />
       <MaterialsShowcase />
       <WhySeleste />

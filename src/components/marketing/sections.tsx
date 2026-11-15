@@ -6,6 +6,8 @@ import { ArrowRight, BadgeCheck, Check, Gauge, PackageCheck, PlayCircle, ScanSea
 import { ButtonLink } from '@/components/ui/Button'
 import { Eyebrow } from '@/components/ui/misc'
 import { useReveal } from '@/hooks/useReveal'
+import { cn } from '@/lib/cn'
+import { HeroJourney } from './HeroJourney'
 import { SAMPLES } from '@/lib/backend/seed'
 import { MATERIALS } from '@/lib/catalog'
 import { formatMoney } from '@/lib/format'
@@ -29,10 +31,22 @@ export function Marquee() {
   )
 }
 
+const HERO_LINES = [
+  { words: ['Upload', 'a', 'model.'], accent: false },
+  { words: ['Get', 'a', 'price.'], accent: true },
+  { words: ['Get', 'your', 'part.'], accent: false },
+]
+
 export function Hero({ onDemo }: { onDemo?: () => void }) {
   const ref = useRef<HTMLElement>(null)
   const gear = SAMPLES[1]
   const gearPrice = calculatePrice(gear.metrics, { ...defaultConfig('petg'), colorId: 'black' })
+  const journey = [
+    { key: 'upload', label: 'Step 1 · Upload', title: gear.file, detail: `Measuring ${gear.metrics.triangles.toLocaleString()} triangles in your browser. Nothing leaves your machine yet.` },
+    { key: 'quote', label: 'Step 2 · Price', title: `${formatMoney(gearPrice.unitCents)} per part`, detail: 'PETG, black, standard quality. Fits the build volume. Compared against 6 other materials.' },
+    { key: 'print', label: 'Step 3 · Print', title: 'On printer 4 · 62%', detail: 'An engineer approved the file. Layer 48 of 80, about 40 minutes left.' },
+    { key: 'ship', label: 'Step 4 · Deliver', title: 'Shipped · arriving Thu', detail: 'Quality checked and handed to the carrier. Tracking is in your dashboard.' },
+  ]
 
   useGSAP(
     () => {
@@ -40,12 +54,16 @@ export function Hero({ onDemo }: { onDemo?: () => void }) {
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         gsap
           .timeline({ defaults: { ease: 'power3.out' } })
-          .from('[data-hero="tag"]', { y: 20, opacity: 0, duration: 0.5, delay: 0.1 })
-          .from('[data-hero="title"]', { y: 30, opacity: 0, duration: 0.7 }, '-=0.3')
-          .from('[data-hero="sub"]', { y: 20, opacity: 0, duration: 0.6 }, '-=0.45')
-          .from('[data-hero="cta"]', { y: 20, opacity: 0, duration: 0.5 }, '-=0.4')
-          .from('[data-hero="art"]', { x: 40, opacity: 0, duration: 0.9, ease: 'back.out(1.2)' }, '-=0.7')
-          .from('[data-hero="card"]', { y: 30, opacity: 0, scale: 0.95, duration: 0.6, stagger: 0.15 }, '-=0.4')
+          .from('[data-hero="tag"]', { y: 16, opacity: 0, duration: 0.5, delay: 0.1 })
+          .from('[data-hero="word"]', { yPercent: 110, duration: 0.8, stagger: 0.05, ease: 'power4.out' }, '-=0.25')
+          .from('[data-hero="sub"]', { y: 16, opacity: 0, duration: 0.6 }, '-=0.5')
+          .from('[data-hero="cta"]', { y: 16, opacity: 0, duration: 0.5, stagger: 0.08 }, '-=0.4')
+          .from('[data-hero="art"]', { y: 40, opacity: 0, scale: 0.96, duration: 1 }, 0.2)
+          .from('[data-hero="card"]', { y: 24, opacity: 0, duration: 0.7, stagger: 0.12 }, '-=0.5')
+
+        // Gentle depth on scroll: art drifts slower than the copy.
+        gsap.to('[data-hero="art"]', { yPercent: 12, ease: 'none', scrollTrigger: { trigger: ref.current, start: 'top top', end: 'bottom top', scrub: true } })
+        gsap.to('[data-hero="glow"]', { yPercent: 30, ease: 'none', scrollTrigger: { trigger: ref.current, start: 'top top', end: 'bottom top', scrub: true } })
       })
       return () => mm.revert()
     },
@@ -53,37 +71,51 @@ export function Hero({ onDemo }: { onDemo?: () => void }) {
   )
 
   return (
-    <section ref={ref} className="relative overflow-hidden">
-      <div className="pointer-events-none absolute -top-40 -right-40 size-[520px] rounded-full bg-peach/40 blur-3xl" aria-hidden />
-      <div className="pointer-events-none absolute -bottom-40 -left-32 size-[420px] rounded-full bg-lilac blur-3xl" aria-hidden />
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 short:py-10 sm:px-6 md:py-24 lg:grid-cols-[1.05fr_1fr] lg:px-8">
+    <section ref={ref} className="relative -mt-[88px] overflow-hidden pt-[88px] short:-mt-[68px] short:pt-[68px]">
+      <div data-hero="glow" className="pointer-events-none absolute inset-0" aria-hidden>
+        <div className="absolute -top-32 right-[-10%] size-[640px] rounded-full bg-peach/45 blur-[120px]" />
+        <div className="absolute top-1/3 -left-40 size-[480px] rounded-full bg-lilac blur-[110px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgb(20_27_34/0.07)_1px,transparent_0)] [background-size:28px_28px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
+      </div>
+
+      <div className="relative mx-auto grid max-w-7xl items-center gap-x-10 gap-y-14 px-4 pt-12 pb-20 sm:px-6 md:pt-16 lg:min-h-[calc(100svh-88px)] lg:grid-cols-[1.1fr_1fr] lg:px-8 lg:pt-8 lg:pb-24 short:min-h-0 short:py-10">
         <div>
           <div data-hero="tag">
             <Eyebrow>3D printing on demand</Eyebrow>
           </div>
-          <h1 data-hero="title" className="mt-6 text-[2.6rem] leading-[1.02] font-black tracking-tight text-balance min-[380px]:text-5xl sm:text-6xl lg:text-7xl short:mt-4">
-            Upload a model.
-            <br />
-            <span className="text-sunset">Get a price.</span> Get your part.
+          <h1 className="mt-6 text-[2.75rem] leading-[1.02] font-black tracking-[-0.035em] min-[380px]:text-5xl sm:text-6xl xl:text-[5.25rem] short:mt-4">
+            {HERO_LINES.map((line, li) => (
+              <span key={li} className="block overflow-hidden pb-[0.08em]">
+                {line.words.map((w, wi) => (
+                  <span key={wi} data-hero="word" className={cn('inline-block', line.accent && 'text-sunset', wi < line.words.length - 1 && 'mr-[0.22em]')}>
+                    {w}
+                  </span>
+                ))}
+              </span>
+            ))}
           </h1>
-          <p data-hero="sub" className="mt-6 max-w-xl text-lg leading-relaxed text-ink/60 sm:text-xl">
-            Seleste analyzes your STL in the browser, prices it across seven materials instantly, and tracks every order from printer to doorstep.
+          <p data-hero="sub" className="mt-7 max-w-lg text-lg leading-relaxed text-ink/60 sm:text-xl">
+            Drop in an STL and see what it costs in seven materials before you blink. We review it, print it, and you follow it all the way to your door.
           </p>
-          <div data-hero="cta" className="mt-9 flex flex-wrap gap-3">
-            <ButtonLink to="/quote" size="lg">
-              Get an instant quote <ArrowRight className="size-5" />
-            </ButtonLink>
-            {onDemo ? (
-              <button onClick={onDemo} className="inline-flex h-14 items-center gap-2.5 rounded-xl px-6 font-semibold transition-colors hover:bg-ink/5">
-                <PlayCircle className="size-5 text-brand" /> Try the live demo
-              </button>
-            ) : (
-              <ButtonLink to="/pricing" size="lg" variant="ghost">
-                See pricing
+          <div className="mt-10 flex flex-wrap items-center gap-3">
+            <div data-hero="cta">
+              <ButtonLink to="/quote" size="lg" className="group">
+                Get an instant quote <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
               </ButtonLink>
-            )}
+            </div>
+            <div data-hero="cta">
+              {onDemo ? (
+                <button onClick={onDemo} className="group inline-flex h-14 items-center gap-2.5 rounded-xl px-5 font-semibold transition-colors hover:bg-ink/5">
+                  <PlayCircle className="size-5 text-brand transition-transform group-hover:scale-110" /> Try the live demo
+                </button>
+              ) : (
+                <ButtonLink to="/pricing" size="lg" variant="ghost">
+                  See pricing
+                </ButtonLink>
+              )}
+            </div>
           </div>
-          <ul data-hero="cta" className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink/55">
+          <ul data-hero="cta" className="mt-10 flex flex-wrap gap-x-6 gap-y-2 border-t border-ink/8 pt-6 text-sm text-ink/55">
             {['No credit card to quote', 'Files stay private', 'Engineer-reviewed'].map((t) => (
               <li key={t} className="flex items-center gap-1.5">
                 <Check className="size-4 text-mint" /> {t}
@@ -92,27 +124,16 @@ export function Hero({ onDemo }: { onDemo?: () => void }) {
           </ul>
         </div>
 
-        <div className="relative">
-          <img data-hero="art" src="/img/hero.png" alt="Isometric illustration of a 3D printer connected to a laptop" width={760} height={622} className="mx-auto w-full max-w-[620px] animate-float" />
-          <div data-hero="card" className="absolute top-6 -left-2 hidden w-64 rounded-2xl border border-white/60 bg-white/85 p-4 shadow-xl backdrop-blur sm:block lg:-left-10">
-            <p className="text-xs font-semibold tracking-wider text-ink/40 uppercase">Instant quote</p>
-            <p className="mt-1 font-semibold">spur-gear.stl</p>
-            <p className="text-sm text-ink/50">PETG · Black · Standard</p>
-            <div className="mt-3 flex items-end justify-between">
-              <span className="text-2xl font-bold tabular-nums">{formatMoney(gearPrice.unitCents)}</span>
-              <span className="rounded-full bg-mint-soft px-2 py-0.5 text-xs font-semibold text-mint">Fits ✓</span>
-            </div>
+        <div className="relative mx-auto w-full max-w-[600px]">
+          <div data-hero="art">
+            <img src="/img/hero.png" alt="Isometric illustration of a 3D printer connected to a laptop" width={760} height={622} className="w-full animate-float" />
           </div>
-          <div data-hero="card" className="absolute -right-2 bottom-4 hidden w-56 rounded-2xl bg-ink p-4 text-white shadow-xl sm:block lg:right-0">
-            <p className="text-xs text-white/50">Order SL-10427</p>
-            <p className="mt-1 flex items-center gap-2 font-semibold">
-              <span className="size-2 rounded-full bg-mint" /> Shipped
-            </p>
-            <div className="mt-3 flex gap-1">
-              {[1, 1, 1, 1, 0].map((on, i) => (
-                <span key={i} className={`h-1.5 flex-1 rounded-full ${on ? 'bg-sunset' : 'bg-white/15'}`} />
-              ))}
-            </div>
+          <div data-hero="card" className="relative z-10 mx-auto -mt-10 w-fit sm:absolute sm:right-0 sm:-bottom-4 sm:mt-0 xl:-right-6">
+            <HeroJourney steps={journey} />
+          </div>
+          <div data-hero="card" className="absolute top-6 left-0 hidden rounded-2xl bg-ink px-4 py-3 text-white shadow-xl sm:block">
+            <p className="text-xs text-white/50">Avg. time to quote</p>
+            <p className="text-2xl font-bold tabular-nums">0.4s</p>
           </div>
         </div>
       </div>
